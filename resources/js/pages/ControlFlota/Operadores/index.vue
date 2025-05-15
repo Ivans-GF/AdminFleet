@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { Head, usePage } from '@inertiajs/vue3';
-
 import HeadingSmall from '@/components/HeadingSmall.vue';
+import { Card, CardContent, CardFooter, CardTitle } from '@/components/ui/card';
+import CardDescription from '@/components/ui/card/CardDescription.vue';
+import CardHeader from '@/components/ui/card/CardHeader.vue';
+
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
 import { type BreadcrumbItem, type SharedData } from '@/types';
+import { Head, usePage } from '@inertiajs/vue3';
 
 interface Props {
     status?: string;
@@ -24,12 +27,17 @@ const page = usePage<SharedData>();
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <Head title="Control - Flota Operadores" />
-
+        <Head title="Control Flota - Operadores" />
         <ControlLayout>
-            <div class="flex flex-col space-y-6">
-                <HeadingSmall title="Operadores" />
-            </div>
+            <HeadingSmall title="Operadores" />
+            <Card>
+                <CardHeader>
+                    <CardTitle> Card Title </CardTitle>
+                    <CardDescription> Card Description </CardDescription>
+                </CardHeader>
+                <CardContent> Card Content </CardContent>
+                <CardFooter> Card Footer </CardFooter>
+            </Card>
         </ControlLayout>
     </AppLayout>
 </template>

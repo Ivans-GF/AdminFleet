@@ -11,6 +11,6 @@ class Unidades_ControlFlota extends Controller
 {
     public function index(): Response
     {
-        return Inertia::render('ControlFlota/Operadores/index');
+        return Inertia::render('ControlFlota/Unidades/index');
     }
 }
