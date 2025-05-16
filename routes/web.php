@@ -24,14 +24,15 @@ Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']]
     Route::get('/index', [Dashboard_ControlFlota::class, 'index'])->name('index');
     //Operadores
     Route::get('operadores/index', [Operadores_ControlFlota::class, 'index'])->name('operadores/index');
-    
-    
-    
-    
-    
-    
-    
-    
+    Route::get('operadores/create', [Operadores_ControlFlota::class, 'create'])->name('operadores/create');
+
+
+
+
+
+
+
+
     //Unidades
     Route::get('unidades/index', [Unidades_ControlFlota::class, 'index'])->name('unidades/index');
 

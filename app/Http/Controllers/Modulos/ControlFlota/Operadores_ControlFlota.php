@@ -13,4 +13,9 @@ class Operadores_ControlFlota extends Controller
     {
         return Inertia::render('ControlFlota/Operadores/index');
     }
+
+    public function create(): Response
+    {
+        return Inertia::render('ControlFlota/Operadores/create');
+    }
 }
