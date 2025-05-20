@@ -14,7 +14,7 @@ import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigg
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
 import { type BreadcrumbItem, type SharedData } from '@/types';
-import { Head, usePage } from '@inertiajs/vue3';
+import { Head, Link, usePage } from '@inertiajs/vue3';
 
 interface Props {
     status?: string;
@@ -41,7 +41,9 @@ const page = usePage<SharedData>();
                 <CardHeader>
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
-                            <Button :href="route('operadores/create')"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador</Button>
+                            <Button as-child>
+                                <Link :href="route('operadores/create')"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador</Link>
+                            </Button>
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
                                     <Button variant="secondary"><Menu class="mr-2 h-4 w-4" />Opciones</Button>

@@ -8,7 +8,7 @@ import { Link, usePage } from '@inertiajs/vue3';
 const sidebarNavItems: NavItem[] = [
     {
         title: 'Dashboard',
-        prefix: '',
+        prefix: '/control-flota/index',
         href: '/control-flota/index',
     },
     {
@@ -39,7 +39,7 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
                         v-for="item in sidebarNavItems"
                         :key="item.href"
                         variant="ghost"
-                        :class="['w-full justify-start', { 'bg-muted': currentPath === item.href }]"
+                        :class="['w-full justify-start', { 'bg-muted': page.url.includes(item.prefix) }]"
                         as-child
                     >
                         <Link :href="item.href">
