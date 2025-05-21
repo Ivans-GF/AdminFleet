@@ -3,8 +3,8 @@ import HeadingSmall from '@/components/HeadingSmall.vue';
 
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
-import { type BreadcrumbItem, type SharedData } from '@/types';
-import { Head, usePage } from '@inertiajs/vue3';
+import { type BreadcrumbItem } from '@/types';
+import { Head } from '@inertiajs/vue3';
 import OperadorForm from './components/OperadorForm.vue';
 
 interface Props {
@@ -23,8 +23,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: '/control-flota/operadores/create',
     },
 ];
-
-const page = usePage<SharedData>();
 </script>
 
 <template>

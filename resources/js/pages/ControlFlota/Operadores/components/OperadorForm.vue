@@ -4,41 +4,89 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
-import { Link } from '@inertiajs/vue3';
-import { Undo2 } from 'lucide-vue-next';
+import Textarea from '@/components/ui/textarea/Textarea.vue';
+import { Link, useForm } from '@inertiajs/vue3';
+import { LoaderCircle, SaveIcon, UndoDot } from 'lucide-vue-next';
 import { computed } from 'vue';
-
 type OperadorForm = 'create' | 'edit';
-
 interface Props {
     mode: OperadorForm;
 }
-
 const props = withDefaults(defineProps<Props>(), {
     mode: 'create',
 });
 const buttonText = computed(() => (props.mode === 'create' ? 'Guardar' : 'Actualizar Tarea'));
+
+const form = useForm({
+    curp: '',
+    rfc: '',
+    nombre: '',
+    apellido: '',
+    direccion: '',
+    nota: '',
+});
 </script>
 <template>
     <Card>
         <CardHeader>
             <CardTitle>
                 <div class="flex flex-row justify-end space-x-2">
-                    <Button as-child>
-                        <Link :href="route('operadores/index')"> <Undo2 class="mr-2 h-4 w-4" />Regresar</Link>
+                    <Button as-child variant="outline">
+                        <Link :href="route('operadores/index')"> <UndoDot class="mr-2 h-4 w-4" />Regresar</Link>
                     </Button>
                 </div>
             </CardTitle>
         </CardHeader>
-        <form @submit.prevent="">
-            <CardContent class="space-y-4">
-                <div class="space-y-2">
-                    <Label for="title">Título</Label>
-                    <Input id="title" placeholder="Ingresa el título de la tarea" />
-                    <InputError />
+        <form class="space-y-2">
+            <CardContent class="space-y-2">
+                <div class="flex w-full justify-end">
+                    <div class="ml-auto flex flex-row space-x-2">
+                        <div class="basis-2xs space-y-2">
+                            <Label for="curp">CURP</Label>
+                            <Input id="curp" v-model="form.curp" />
+                            <InputError :message="form.errors.curp" />
+                        </div>
+                        <div class="basis-1xs space-y-2">
+                            <Label for="rfc">RFC</Label>
+                            <Input id="rfc" v-model="form.rfc" />
+                            <InputError :message="form.errors.rfc" />
+                        </div>
+                    </div>
+                </div>
+                <div class="flex w-full space-x-2">
+                    <div class="flex-1 space-y-2">
+                        <Label for="nombre">Nombre</Label>
+                        <Input id="nombre" v-model="form.nombre" />
+                        <InputError :message="form.errors.nombre" />
+                    </div>
+                    <div class="flex-1 space-y-2">
+                        <Label for="apellido">Apellido</Label>
+                        <Input id="apellido" v-model="form.apellido" />
+                        <InputError :message="form.errors.apellido" />
+                    </div>
+                </div>
+                <div class="flex w-full space-x-2">
+                    <div class="flex-1 space-y-2">
+                        <Label for="direccion">Dirección</Label>
+                        <Input id="direccion" v-model="form.direccion" />
+                        <InputError :message="form.errors.direccion" />
+                    </div>
+                </div>
+                <div class="flex w-full space-x-2">
+                    <div class="flex-1 space-y-2">
+                        <Label for="nota">Nota de operador</Label>
+                        <Textarea id="nota" v-model="form.nota" />
+                        <InputError :message="form.errors.nota" />
+                    </div>
                 </div>
             </CardContent>
-            <CardFooter class="flex justify-between"> </CardFooter>
+            <CardFooter class="flex-end flex justify-between">
+                <Button type="submit" :disabled="form.processing">
+                    <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
+                    <SaveIcon class="mr-2 h-4 w-4" />
+                    {{ buttonText }}
+                </Button>
+            </CardFooter>
         </form>
     </Card>
 </template>
