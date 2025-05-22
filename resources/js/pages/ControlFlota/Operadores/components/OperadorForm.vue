@@ -80,7 +80,7 @@ const form = useForm({
                     </div>
                 </div>
             </CardContent>
-            <CardFooter class="flex-end flex justify-between">
+            <CardFooter class="flex items-center justify-between">
                 <Button type="submit" :disabled="form.processing">
                     <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
                     <SaveIcon class="mr-2 h-4 w-4" />
