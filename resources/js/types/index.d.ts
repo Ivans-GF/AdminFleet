@@ -25,6 +25,12 @@ export interface SharedData extends PageProps {
     auth: Auth;
     ziggy: Config & { location: string };
     sidebarOpen: boolean;
+    flash: {
+        sucess?: string;
+        error?: string;
+        info?: string;
+        warning?: string;
+    };
 }
 
 export interface User {

@@ -9,11 +9,14 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Francerz\MX_CURP\CURP;
-
+use Illuminate\Http\RedirectResponse;
 class Operadores_ControlFlota extends Controller
 {
     public function index(): Response
     {
+
+
+        
         return Inertia::render('ControlFlota/Operadores/index');
     }
 
@@ -38,6 +41,6 @@ class Operadores_ControlFlota extends Controller
         $operador->created_iduser = auth()->id();
         $operador->updated_iduser = auth()->id(); 
         $operador->save();
-        return redirect()->route('operadores.index');
+        return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
     }
 }

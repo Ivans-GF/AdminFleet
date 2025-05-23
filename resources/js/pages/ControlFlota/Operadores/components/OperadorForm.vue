@@ -97,11 +97,10 @@ const handleSubmit = () => {
                     </div>
                 </div>
             </CardContent>
-            <CardFooter class="flex items-center justify-between space-x-2">
+            <CardFooter class="flex items-end justify-end space-x-2">
                 <Button type="submit" :disabled="form.processing">
                     <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
-                    <SaveIcon class="mr-2 h-4 w-4" />
-                    {{ buttonText }}
+                    <SaveIcon v-else class="mr-2 h-4 w-4" /> {{ form.processing ? 'Guardando...' : buttonText }}
                 </Button>
             </CardFooter>
         </form>
