@@ -5,6 +5,8 @@ namespace App\Http\Requests\ControlFlota;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use App\Rules\CurpValida;
+use App\Rules\RfcValido;
+use App\Rules\ImssValido;
 
 class OperadoresRequest extends FormRequest
 {
@@ -25,8 +27,9 @@ class OperadoresRequest extends FormRequest
     {
 
         return [
-            'curp' => ['required', 'string', 'max:18', new CurpValida()],
-            'rfc' => ['required', 'string', 'max:12', 'min:12'],
+            'curp' => ['required', 'string', 'max:18', new CurpValida(),  Rule::unique('operadores', 'curp')],
+            'rfc' => ['required', 'string', 'min:12', 'max:13', new RfcValido(),  Rule::unique('operadores', 'rfc')],
+            'nss' => ['required', 'numeric', 'digits:11', new ImssValido(),  Rule::unique('operadores', 'nss')],
             'nombre' => ['required', 'string', 'max:255'],
             'apellido' => [
                 'required',
@@ -39,7 +42,6 @@ class OperadoresRequest extends FormRequest
             ],
             'domicilio' => ['string', 'max:240'],
             'nota' => ['string', 'max:650'],
-
         ];
     }
 
@@ -47,12 +49,28 @@ class OperadoresRequest extends FormRequest
     {
         return [
             'curp.required' => 'El CURP es obligatorio.',
+            'curp.unique' => 'Ya existe un operador con el CURP.',
             'curp.min' => 'El CURP requiere 18 caracteres.',
             'curp.max' => 'El CURP solo adminte 18 caracteres.',
             
             'rfc.required' => 'El RFC es obligatorio.',
+            'rfc.unique' => 'Ya existe un operador con el RFC.',
             'rfc.min' => 'El RFC requiere 12 caracteres.',
-            'rfc.max' => 'El RFC solo adminte 12 caracteres.',
+            'rfc.max' => 'El RFC solo adminte 13 caracteres.',
+
+            'nss.required' => 'El NSS es obligatorio.',
+            'nss.unique' => 'Ya existe un operador con el NSS.',
+            'nss.digits' => 'El RFC requiere 11 caracteres.',
+
+            'nombre.required' => 'El Nombre es obligatorio.',
+            'nombre.max' => 'El Nombre solo adminte 255 caracteres.',
+
+            'apellido.required' => 'El Apellido es obligatorio.',
+            'apellido.max' => 'El Apellido solo adminte 255 caracteres.',
+            'apellido.unique' => 'Ya existe un operador con el mismo nombre y apellido.',
+
+            'domicilio.max' => 'El Domicilio solo adminte 240 caracteres.',
+            'nota.max' => 'El Domicilio solo adminte 650 caracteres.',
         ];
     }
 }

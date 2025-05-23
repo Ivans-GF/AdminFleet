@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8dec4af8832a92cf8ab536a268315eb0",
+    "content-hash": "6f7c5b3e15ccbe316a33961d249947f4",
     "packages": [
         {
             "name": "brick/math",
@@ -591,6 +591,82 @@
                 "source": "https://github.com/francerz/php-mx-curp/tree/v0.1.3"
             },
             "time": "2023-03-10T20:19:04+00:00"
+        },
+        {
+            "name": "francerz/mx-imss",
+            "version": "v0.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/francerz/php-mx-imss.git",
+                "reference": "80a5540370c7aab3686095a328086ba960b1b84e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/francerz/php-mx-imss/zipball/80a5540370c7aab3686095a328086ba960b1b84e",
+                "reference": "80a5540370c7aab3686095a328086ba960b1b84e",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Francerz\\MxImss\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "ISC"
+            ],
+            "authors": [
+                {
+                    "name": "Francerz",
+                    "email": "10836837+francerz@users.noreply.github.com"
+                }
+            ],
+            "support": {
+                "issues": "https://github.com/francerz/php-mx-imss/issues",
+                "source": "https://github.com/francerz/php-mx-imss/tree/v0.1.2"
+            },
+            "time": "2024-08-24T22:02:40+00:00"
+        },
+        {
+            "name": "francerz/mx-rfc",
+            "version": "v0.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/francerz/php-mx-rfc.git",
+                "reference": "0104f49f2bc3940a0dff596d31840c58a0d7d8da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/francerz/php-mx-rfc/zipball/0104f49f2bc3940a0dff596d31840c58a0d7d8da",
+                "reference": "0104f49f2bc3940a0dff596d31840c58a0d7d8da",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Francerz\\MX_RFC\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Francerz",
+                    "email": "francerzam@hotmail.com"
+                }
+            ],
+            "description": "Herramienta de validaci\u0000n para el Registro Federal del Contribuyente (RFC) en M\u0000xico",
+            "support": {
+                "issues": "https://github.com/francerz/php-mx-rfc/issues",
+                "source": "https://github.com/francerz/php-mx-rfc/tree/v0.1.1"
+            },
+            "time": "2024-03-06T17:20:38+00:00"
         },
         {
             "name": "fruitcake/php-cors",

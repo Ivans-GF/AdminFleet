@@ -16,12 +16,10 @@ class CurpValida implements ValidationRule
     {
         try {
             $curp = new CURP($value);
-
             if (!$curp->esValida()) {
                 $fail('El CURP no es válido.');
             }
         } catch (\Exception $e) {
-            // Catch any exceptions during CURP object creation (e.g., malformed string)
             $fail('El formato del CURP no es correcto.');
         }
     }

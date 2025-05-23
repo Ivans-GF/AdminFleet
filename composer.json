@@ -11,6 +11,8 @@
     "require": {
         "php": "^8.2",
         "francerz/mx-curp": "^0.1.3",
+        "francerz/mx-imss": "^0.1.2",
+        "francerz/mx-rfc": "^0.1.1",
         "inertiajs/inertia-laravel": "^2.0",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",

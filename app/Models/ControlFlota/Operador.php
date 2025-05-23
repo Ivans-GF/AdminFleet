@@ -13,6 +13,7 @@ class Operador extends Model
     protected $fillable = [
         'curp',
         'rfc',
+        'nss',
         'nombre',
         'apellido',
         'domicilio',

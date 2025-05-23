@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Modulos\ControlFlota;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ControlFlota\OperadoresRequest;
-use App\ModelsControFlota\Operador;
+use App\Models\ControLFlota\Operador;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use Francerz\MX_CURP\CURP;
 
 class Operadores_ControlFlota extends Controller
 {
@@ -23,7 +24,20 @@ class Operadores_ControlFlota extends Controller
 
     public function store (OperadoresRequest $request) : RedirectResponse {
         $operador = new Operador ($request->validated());
+        $operador->curp = $request->input('curp');
+        $operador->rfc = $request->input('rfc');
+        $operador->nss = $request->input('nss');
+        $operador->nombre = $request->input('nombre');
+        $operador->apellido = $request->input('apellido');
+        $operador->domicilio = $request->input('domicilio');
+        $curp = new CURP($request->input('curp'));
+        $operador->fechanacimiento = $curp->getFechaNacimiento();
+        $operador->nota = $request->input('nota');
+        $operador->estado = 1;
+        $operador->estatus = 1;
+        $operador->created_iduser = auth()->id();
+        $operador->updated_iduser = auth()->id(); 
         $operador->save();
-        return redirect()->route('operadores.index')->with('success', 'Tarea creeada correctamente');
+        return redirect()->route('operadores.index');
     }
 }

@@ -20,9 +20,10 @@ const buttonText = computed(() => (props.mode === 'create' ? 'Guardar ' : 'Actua
 const form = useForm({
     curp: '',
     rfc: '',
+    nss: '',
     nombre: '',
     apellido: '',
-    direccion: '',
+    domicilio: '',
     nota: '',
 });
 
@@ -62,6 +63,11 @@ const handleSubmit = () => {
                             <Input id="rfc" v-model="form.rfc" />
                             <InputError :message="form.errors.rfc" />
                         </div>
+                        <div class="basis-1xs space-y-2">
+                            <Label for="nss">NSS</Label>
+                            <Input id="nss" v-model="form.nss" type="number" />
+                            <InputError :message="form.errors.nss" />
+                        </div>
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
@@ -78,9 +84,9 @@ const handleSubmit = () => {
                 </div>
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">
-                        <Label for="direccion">Dirección</Label>
-                        <Input id="direccion" v-model="form.direccion" />
-                        <InputError :message="form.errors.direccion" />
+                        <Label for="v">Domicilio</Label>
+                        <Input id="domicilio" v-model="form.domicilio" />
+                        <InputError :message="form.errors.domicilio" />
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
