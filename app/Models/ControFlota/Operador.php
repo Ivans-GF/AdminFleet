@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\ControlFlota;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Operadores extends Model
+class Operador extends Model
 {
     protected $table = 'operadores';
     protected $primaryKey = 'id';

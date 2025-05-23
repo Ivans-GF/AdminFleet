@@ -17,7 +17,7 @@ const mainNavItems: NavItem[] = [
     {
         title: 'Control Flota',
         prefix: 'control-flota',
-        href: '/control-flota/index',
+        href: route('operadores.index'),
         icon: Truck,
     },
 ];

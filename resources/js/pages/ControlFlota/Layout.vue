@@ -9,17 +9,17 @@ const sidebarNavItems: NavItem[] = [
     {
         title: 'Dashboard',
         prefix: '/control-flota/index',
-        href: '/control-flota/index',
+        href: route('index.controflota'),
     },
     {
         title: 'Operadores',
         prefix: '/control-flota/operadores',
-        href: '/control-flota/operadores/index',
+        href: route('operadores.index'),
     },
     {
         title: 'Unidades',
         prefix: '/control-flota/unidades',
-        href: '/control-flota/unidades/index',
+        href: route('unidades.index'),
     },
 ];
 

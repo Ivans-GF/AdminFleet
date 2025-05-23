@@ -21,10 +21,11 @@ Route::get('/inicio', function () {
 //Control Flotilla
 Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']], function () {
     //Dasboard Flota
-    Route::get('/index', [Dashboard_ControlFlota::class, 'index'])->name('index');
+    Route::get('/index', [Dashboard_ControlFlota::class, 'index'])->name('index.controflota');
     //Operadores
-    Route::get('operadores/index', [Operadores_ControlFlota::class, 'index'])->name('operadores/index');
-    Route::get('operadores/create', [Operadores_ControlFlota::class, 'create'])->name('operadores/create');
+    Route::get('/operadores/index', [Operadores_ControlFlota::class, 'index'])->name('operadores.index');
+    Route::get('/operadores/create', [Operadores_ControlFlota::class, 'create'])->name('operadores.create');
+    Route::post('/operadores/store', [Operadores_ControlFlota::class, 'store'])->name('operadores.store');
 
 
 
@@ -34,7 +35,7 @@ Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']]
 
 
     //Unidades
-    Route::get('unidades/index', [Unidades_ControlFlota::class, 'index'])->name('unidades/index');
+    Route::get('unidades/index', [Unidades_ControlFlota::class, 'index'])->name('unidades.index');
 
 
 

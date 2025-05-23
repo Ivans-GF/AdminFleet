@@ -16,11 +16,11 @@ defineProps<Props>();
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Operadores',
-        href: '/control-flota/operadores/index',
+        href: route('operadores.index'),
     },
     {
         title: 'Nuevo operador',
-        href: '/control-flota/operadores/create',
+        href: route('operadores.create'),
     },
 ];
 </script>

@@ -15,7 +15,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
     mode: 'create',
 });
-const buttonText = computed(() => (props.mode === 'create' ? 'Guardar' : 'Actualizar Tarea'));
+const buttonText = computed(() => (props.mode === 'create' ? 'Guardar ' : 'Actualizar Tarea'));
 
 const form = useForm({
     curp: '',
@@ -25,6 +25,17 @@ const form = useForm({
     direccion: '',
     nota: '',
 });
+
+const handleSubmit = () => {
+    if (props.mode === 'create') {
+        form.post(route('operadores.store'), {
+            preserveScroll: true,
+        });
+    }
+    //else if (props.task) {
+    // form.put(route('tasks.update', { task: props.task.id }));
+    //}
+};
 </script>
 <template>
     <Card>
@@ -32,12 +43,12 @@ const form = useForm({
             <CardTitle>
                 <div class="flex flex-row justify-end space-x-2">
                     <Button as-child variant="outline">
-                        <Link :href="route('operadores/index')"> <UndoDot class="mr-2 h-4 w-4" />Regresar</Link>
+                        <Link :href="route('operadores.index')"> <UndoDot class="mr-2 h-4 w-4" />Regresar</Link>
                     </Button>
                 </div>
             </CardTitle>
         </CardHeader>
-        <form class="space-y-2">
+        <form @submit.prevent="handleSubmit" class="space-y-2">
             <CardContent class="space-y-2">
                 <div class="flex w-full justify-end">
                     <div class="ml-auto flex flex-row space-x-2">
@@ -80,7 +91,7 @@ const form = useForm({
                     </div>
                 </div>
             </CardContent>
-            <CardFooter class="flex items-center justify-between">
+            <CardFooter class="flex items-center justify-between space-x-2">
                 <Button type="submit" :disabled="form.processing">
                     <LoaderCircle v-if="form.processing" class="h-4 w-4 animate-spin" />
                     <SaveIcon class="mr-2 h-4 w-4" />

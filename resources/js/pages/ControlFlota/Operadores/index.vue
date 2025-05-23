@@ -25,7 +25,7 @@ defineProps<Props>();
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Operadores',
-        href: '/control-flota/operadores/index',
+        href: route('operadores.index'),
     },
 ];
 
@@ -42,7 +42,7 @@ const page = usePage<SharedData>();
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
                             <Button as-child>
-                                <Link :href="route('operadores/create')"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador</Link>
+                                <Link :href="route('operadores.create')"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador</Link>
                             </Button>
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
