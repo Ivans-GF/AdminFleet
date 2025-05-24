@@ -16,6 +16,7 @@ class Operador extends Model
         'nss',
         'nombre',
         'apellido',
+        'telefono',
         'domicilio',
         'fechanacimiento',
         'nota',

@@ -7,7 +7,9 @@ import Label from '@/components/ui/label/Label.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import { Link, useForm } from '@inertiajs/vue3';
 import { LoaderCircle, SaveIcon, UndoDot } from 'lucide-vue-next';
+import { vMaska } from 'maska/vue';
 import { computed } from 'vue';
+
 type OperadorForm = 'create' | 'edit';
 interface Props {
     mode: OperadorForm;
@@ -23,6 +25,7 @@ const form = useForm({
     nss: '',
     nombre: '',
     apellido: '',
+    telefono: '',
     domicilio: '',
     nota: '',
 });
@@ -63,11 +66,6 @@ const handleSubmit = () => {
                             <Input id="rfc" v-model="form.rfc" />
                             <InputError :message="form.errors.rfc" />
                         </div>
-                        <div class="basis-1xs space-y-2">
-                            <Label for="nss">NSS</Label>
-                            <Input id="nss" v-model="form.nss" type="number" />
-                            <InputError :message="form.errors.nss" />
-                        </div>
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
@@ -80,6 +78,18 @@ const handleSubmit = () => {
                         <Label for="apellido">Apellido</Label>
                         <Input id="apellido" v-model="form.apellido" />
                         <InputError :message="form.errors.apellido" />
+                    </div>
+                </div>
+                <div class="flex w-full space-x-2">
+                    <div class="basis-1xs space-y-2">
+                        <Label for="nss">NSS</Label>
+                        <Input id="nss" v-model="form.nss" type="number" />
+                        <InputError :message="form.errors.nss" />
+                    </div>
+                    <div class="basis-1xs space-y-2">
+                        <Label for="telefono">Teléfono</Label>
+                        <Input id="telefono" type="tel" v-maska="'## #### ####'" v-model="form.telefono" />
+                        <InputError :message="form.errors.telefono" />
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">

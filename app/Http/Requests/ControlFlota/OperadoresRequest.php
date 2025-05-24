@@ -40,8 +40,9 @@ class OperadoresRequest extends FormRequest
                         ->where('apellido', $this->apellido);
                 })
             ],
-            'domicilio' => ['string', 'max:240'],
-            'nota' => ['string', 'max:650'],
+            'telefono' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'telefono')],
+            'domicilio' => ['nullable', 'string', 'max:240'],
+            'nota' => ['nullable','string', 'max:650'],
         ];
     }
 
@@ -68,6 +69,10 @@ class OperadoresRequest extends FormRequest
             'apellido.required' => 'El Apellido es obligatorio.',
             'apellido.max' => 'El Apellido solo adminte 255 caracteres.',
             'apellido.unique' => 'Ya existe un operador con el mismo nombre y apellido.',
+
+            'telefono.required' => 'El Teléfono es obligatorio.',
+            'telefono.unique' => 'Ya existe un operador con el Teléfono.',
+            'telefono.max' => 'El Teléfono solo adminte 20 caracteres.',
 
             'domicilio.max' => 'El Domicilio solo adminte 240 caracteres.',
             'nota.max' => 'El Domicilio solo adminte 650 caracteres.',

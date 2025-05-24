@@ -11,16 +11,18 @@ import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue
 import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue';
 import DropdownMenuSeparator from '@/components/ui/dropdown-menu/DropdownMenuSeparator.vue';
 import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 
-interface Props {
-    status?: string;
-}
-
-defineProps<Props>();
+defineProps({
+    operadores: {
+        type: Array,
+        required: true,
+    },
+});
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -57,7 +59,30 @@ const page = usePage<SharedData>();
                         </div>
                     </CardTitle>
                 </CardHeader>
-                <CardContent> Card Content </CardContent>
+                <CardContent>
+                    <div class="flex h-full flex-1 flex-col gap-2 rounded-xl p-2">
+                        <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Estatus</TableHead>
+                                    <TableHead>Nombre operador</TableHead>
+                                    <TableHead>Teléfono</TableHead>
+                                    <TableHead>Indicadores</TableHead>
+                                    <TableHead>-</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                <TableRow v-for="operador in operadores" :key="operador.id">
+                                    <TableCell>{{ operador.estatus }}</TableCell>
+                                    <TableCell>{{ operador.nombre }} {{ operador.apellido }}</TableCell>
+                                    <TableCell>{{ operador.telefono }}</TableCell>
+                                    <TableCell>--</TableCell>
+                                    <TableCell>---</TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </div>
+                </CardContent>
             </Card>
         </ControlLayout>
     </AppLayout>

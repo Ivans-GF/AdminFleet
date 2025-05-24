@@ -14,10 +14,10 @@ class Operadores_ControlFlota extends Controller
 {
     public function index(): Response
     {
-
-
-        
-        return Inertia::render('ControlFlota/Operadores/index');
+         $operadores = Operador::all();
+        return Inertia::render('ControlFlota/Operadores/index',[
+            'operadores' => $operadores 
+        ]);
     }
 
     public function create(): Response
