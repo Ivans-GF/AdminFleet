@@ -32,7 +32,7 @@ const currentPath = page.props.ziggy?.location ? new URL(page.props.ziggy.locati
     <div class="px-4 py-6">
         <Heading title="Control Flota" />
 
-        <div class="flex flex-col space-y-8 md:space-y-0 lg:flex-row lg:space-y-0 lg:space-x-12">
+        <div class="flex flex-col space-y-8 md:space-y-0 lg:flex-row lg:space-y-0 lg:space-x-2">
             <aside class="w-full max-w-xl lg:w-48">
                 <nav class="flex flex-col space-y-1 space-x-0">
                     <Button

@@ -43,12 +43,12 @@ const page = usePage<SharedData>();
                 <CardHeader>
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
-                            <Button as-child>
+                            <Button as-child size="sm">
                                 <Link :href="route('operadores.create')"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador</Link>
                             </Button>
                             <DropdownMenu>
                                 <DropdownMenuTrigger>
-                                    <Button variant="secondary"><Menu class="mr-2 h-4 w-4" />Opciones</Button>
+                                    <Button size="sm" variant="secondary"><Menu class="mr-2 h-4 w-4" />Opciones</Button>
                                 </DropdownMenuTrigger>
                                 <DropdownMenuContent>
                                     <DropdownMenuLabel>Opciones</DropdownMenuLabel>
