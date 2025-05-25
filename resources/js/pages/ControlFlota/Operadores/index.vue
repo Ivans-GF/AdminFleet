@@ -4,6 +4,7 @@ import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import { CirclePlus, Menu } from 'lucide-vue-next';
 
+import { Badge } from '@/components/ui/badge';
 import Button from '@/components/ui/button/Button.vue';
 import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu.vue';
 import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuContent.vue';
@@ -68,16 +69,23 @@ const page = usePage<SharedData>();
                                     <TableHead>Nombre operador</TableHead>
                                     <TableHead>Teléfono</TableHead>
                                     <TableHead>Indicadores</TableHead>
-                                    <TableHead>-</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
                                 <TableRow v-for="operador in operadores" :key="operador.id">
-                                    <TableCell>{{ operador.estatus }}</TableCell>
+                                    <TableCell class="flex items-center justify-center">
+                                        <Badge
+                                            :class="{
+                                                'bg-red-500 text-white': operador.estatus === 0,
+                                                'bg-green-500 text-white': operador.estatus === 1,
+                                            }"
+                                        >
+                                            {{ operador.estatus === 0 ? 'Atención' : 'Correcto' }}
+                                        </Badge>
+                                    </TableCell>
                                     <TableCell>{{ operador.nombre }} {{ operador.apellido }}</TableCell>
                                     <TableCell>{{ operador.telefono }}</TableCell>
                                     <TableCell>--</TableCell>
-                                    <TableCell>---</TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>
