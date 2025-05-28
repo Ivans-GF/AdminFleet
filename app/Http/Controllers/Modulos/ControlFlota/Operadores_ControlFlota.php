@@ -43,4 +43,9 @@ class Operadores_ControlFlota extends Controller
         $operador->save();
         return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
     }
+
+    public function edit($id): Response
+    {
+        return Inertia::render('ControlFlota/Operadores/create');
+    }
 }

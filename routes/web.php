@@ -26,6 +26,7 @@ Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']]
     Route::get('/operadores/index', [Operadores_ControlFlota::class, 'index'])->name('operadores.index');
     Route::get('/operadores/create', [Operadores_ControlFlota::class, 'create'])->name('operadores.create');
     Route::post('/operadores/store', [Operadores_ControlFlota::class, 'store'])->name('operadores.store');
+    Route::get('/operadores/edit/{id}', [Operadores_ControlFlota::class, 'edit'])->name('operadores.edit');
 
 
 
