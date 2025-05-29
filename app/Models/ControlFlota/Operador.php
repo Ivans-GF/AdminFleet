@@ -1,14 +1,13 @@
 <?php
 
 namespace App\Models\ControlFlota;
-
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 class Operador extends Model
 {
-    protected $table = 'operadores';
-    protected $primaryKey = 'id';
+    use HasFactory;
 
+    protected $table = 'operadores';
 
     protected $fillable = [
         'curp',

@@ -5,40 +5,46 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
+import { type Operador } from '@/types';
 import { Link, useForm } from '@inertiajs/vue3';
 import { LoaderCircle, SaveIcon, UndoDot } from 'lucide-vue-next';
 import { vMaska } from 'maska/vue';
 import { computed } from 'vue';
 
 type OperadorForm = 'create' | 'edit';
+
 interface Props {
+    operador?: Operador;
     mode: OperadorForm;
 }
+
 const props = withDefaults(defineProps<Props>(), {
+    operador: undefined,
     mode: 'create',
 });
+console.log('Mode:', props.mode);
+console.log('Operador prop:', props.operador);
 const buttonText = computed(() => (props.mode === 'create' ? 'Guardar ' : 'Actualizar Tarea'));
 
 const form = useForm({
-    curp: '',
-    rfc: '',
-    nss: '',
-    nombre: '',
-    apellido: '',
-    telefono: '',
-    domicilio: '',
-    nota: '',
+    curp: props.operador?.curp || '',
+    rfc: props.operador?.rfc || '',
+    nss: props.operador?.nss || '',
+    nombre: props.operador?.nombre || '',
+    apellido: props.operador?.apellido || '',
+    telefono: props.operador?.telefono || '',
+    domicilio: props.operador?.domicilio || '',
+    nota: props.operador?.nota || '',
 });
 
+console.log('aqui');
 const handleSubmit = () => {
     if (props.mode === 'create') {
         form.post(route('operadores.store'), {
             preserveScroll: true,
         });
+    } else {
     }
-    //else if (props.task) {
-    // form.put(route('tasks.update', { task: props.task.id }));
-    //}
 };
 </script>
 <template>
@@ -58,12 +64,12 @@ const handleSubmit = () => {
                     <div class="ml-auto flex flex-row space-x-2">
                         <div class="basis-2xs space-y-2">
                             <Label for="curp">CURP</Label>
-                            <Input id="curp" v-model="form.curp" />
+                            <Input id="curp" v-model="form.curp" :disabled="form.processing" />
                             <InputError :message="form.errors.curp" />
                         </div>
                         <div class="basis-1xs space-y-2">
                             <Label for="rfc">RFC</Label>
-                            <Input id="rfc" v-model="form.rfc" />
+                            <Input id="rfc" v-model="form.rfc" :disabled="form.processing" />
                             <InputError :message="form.errors.rfc" />
                         </div>
                     </div>
@@ -71,38 +77,38 @@ const handleSubmit = () => {
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">
                         <Label for="nombre">Nombre</Label>
-                        <Input id="nombre" v-model="form.nombre" />
+                        <Input id="nombre" v-model="form.nombre" :disabled="form.processing" />
                         <InputError :message="form.errors.nombre" />
                     </div>
                     <div class="flex-1 space-y-2">
                         <Label for="apellido">Apellido</Label>
-                        <Input id="apellido" v-model="form.apellido" />
+                        <Input id="apellido" v-model="form.apellido" :disabled="form.processing" />
                         <InputError :message="form.errors.apellido" />
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
                     <div class="basis-1xs space-y-2">
                         <Label for="nss">NSS</Label>
-                        <Input id="nss" v-model="form.nss" type="number" />
+                        <Input id="nss" v-model="form.nss" type="number" :disabled="form.processing" />
                         <InputError :message="form.errors.nss" />
                     </div>
                     <div class="basis-1xs space-y-2">
                         <Label for="telefono">Teléfono</Label>
-                        <Input id="telefono" type="tel" v-maska="'## #### ####'" v-model="form.telefono" />
+                        <Input id="telefono" type="tel" v-maska="'## #### ####'" v-model="form.telefono" :disabled="form.processing" />
                         <InputError :message="form.errors.telefono" />
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">
                         <Label for="v">Domicilio</Label>
-                        <Input id="domicilio" v-model="form.domicilio" />
+                        <Input id="domicilio" v-model="form.domicilio" :disabled="form.processing" />
                         <InputError :message="form.errors.domicilio" />
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">
                         <Label for="nota">Nota de operador</Label>
-                        <Textarea id="nota" v-model="form.nota" />
+                        <Textarea id="nota" v-model="form.nota" :disabled="form.processing" />
                         <InputError :message="form.errors.nota" />
                     </div>
                 </div>

@@ -87,7 +87,7 @@ const page = usePage<SharedData>();
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
                                                 <DropdownMenuItem value="bottom">
-                                                    <Link :href="route('operadores.edit')" class="flex items-center">
+                                                    <Link :href="route('operadores.edit', operador.id)" class="flex items-center">
                                                         <UserPen class="mr-2 h-4 w-4" /> Modificar datos
                                                     </Link>
                                                 </DropdownMenuItem>

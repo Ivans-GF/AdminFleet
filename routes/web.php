@@ -10,24 +10,24 @@ use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 //Validar direccion raiz //
-Route::get('/', function () {
+Route::GET('/', function () {
     return Redirect::route('inicio');
 });
 
-Route::get('/inicio', function () {
+Route::GET('/inicio', function () {
     return Inertia::render('inicio');
 })->middleware(['auth', 'verified'])->name('inicio');
 
 //Control Flotilla
 Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']], function () {
     //Dasboard Flota
-    Route::get('/index', [Dashboard_ControlFlota::class, 'index'])->name('index.controflota');
+    Route::GET('/index', [Dashboard_ControlFlota::class, 'index'])->name('index.controflota');
     //Operadores
-    Route::get('/operadores/index', [Operadores_ControlFlota::class, 'index'])->name('operadores.index');
-    Route::get('/operadores/create', [Operadores_ControlFlota::class, 'create'])->name('operadores.create');
-    Route::post('/operadores/store', [Operadores_ControlFlota::class, 'store'])->name('operadores.store');
-    Route::get('/operadores/edit/{id}', [Operadores_ControlFlota::class, 'edit'])->name('operadores.edit');
+    Route::GET('/operadores/index', [Operadores_ControlFlota::class, 'index'])->name('operadores.index');
+    Route::GET('/operadores/create', [Operadores_ControlFlota::class, 'create'])->name('operadores.create');
+    Route::POST('/operadores/store', [Operadores_ControlFlota::class, 'store'])->name('operadores.store');
 
+    Route::GET('/operadores/{operador}/edit', [Operadores_ControlFlota::class, 'edit'])->name('operadores.edit');
 
 
 
@@ -36,7 +36,7 @@ Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']]
 
 
     //Unidades
-    Route::get('unidades/index', [Unidades_ControlFlota::class, 'index'])->name('unidades.index');
+    Route::GET('unidades/index', [Unidades_ControlFlota::class, 'index'])->name('unidades.index');
 
 
 

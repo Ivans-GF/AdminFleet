@@ -43,4 +43,16 @@ export interface User {
     updated_at: string;
 }
 
+//ControlFlotilla
+interface Operador {
+    id: number;
+    curp: string;
+    rfc: string;
+    nss: string;
+    nombre: string;
+    apellido: string;
+    telefono: string;
+    domicilio: string;
+    nota: string;
+}
 export type BreadcrumbItemType = BreadcrumbItem;

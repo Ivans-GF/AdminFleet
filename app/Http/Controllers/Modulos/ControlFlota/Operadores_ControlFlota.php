@@ -12,16 +12,14 @@ use Francerz\MX_CURP\CURP;
 use Illuminate\Http\RedirectResponse;
 class Operadores_ControlFlota extends Controller
 {
-    public function index(): Response
-    {
+    public function index(): Response{
          $operadores = Operador::all();
         return Inertia::render('ControlFlota/Operadores/index',[
             'operadores' => $operadores 
         ]);
     }
 
-    public function create(): Response
-    {
+    public function create(): Response{
         return Inertia::render('ControlFlota/Operadores/create');
     }
 
@@ -44,8 +42,12 @@ class Operadores_ControlFlota extends Controller
         return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
     }
 
-    public function edit($id): Response
+    public function edit(Operador $operador): Response
     {
-        return Inertia::render('ControlFlota/Operadores/create');
+
+        if (!$operador) {abort(404, 'Operador no encontrado.');}
+        return Inertia::render('ControlFlota/Operadores/edit', [
+            'operador' => $operador,
+        ]);
     }
 }
