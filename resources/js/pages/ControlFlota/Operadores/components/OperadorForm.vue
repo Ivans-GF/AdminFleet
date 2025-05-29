@@ -22,8 +22,7 @@ const props = withDefaults(defineProps<Props>(), {
     operador: undefined,
     mode: 'create',
 });
-console.log('Mode:', props.mode);
-console.log('Operador prop:', props.operador);
+
 const buttonText = computed(() => (props.mode === 'create' ? 'Guardar ' : 'Actualizar Tarea'));
 
 const form = useForm({
@@ -37,13 +36,13 @@ const form = useForm({
     nota: props.operador?.nota || '',
 });
 
-console.log('aqui');
 const handleSubmit = () => {
     if (props.mode === 'create') {
         form.post(route('operadores.store'), {
             preserveScroll: true,
         });
-    } else {
+    } else if (props.operador) {
+        form.patch(route('operadores.update', { operador: props.operador.id }));
     }
 };
 </script>

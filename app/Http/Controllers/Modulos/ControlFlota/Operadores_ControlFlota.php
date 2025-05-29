@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Modulos\ControlFlota;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ControlFlota\OperadoresRequest;
+use App\Http\Requests\ControlFlota\UpdateOperadoresRequest;
 use App\Models\ControLFlota\Operador;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -49,5 +50,11 @@ class Operadores_ControlFlota extends Controller
         return Inertia::render('ControlFlota/Operadores/edit', [
             'operador' => $operador,
         ]);
+    }
+
+    public function update(UpdateOperadoresRequest $request, Operador $operador) : RedirectResponse
+    {
+        $operador->update($request->validated());
+        return redirect()->route('operadores.index')->with('success', 'Información de operador modificada correctamente.');
     }
 }

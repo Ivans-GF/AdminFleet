@@ -48,7 +48,7 @@ interface Operador {
     id: number;
     curp: string;
     rfc: string;
-    nss: string;
+    nss: number;
     nombre: string;
     apellido: string;
     telefono: string;

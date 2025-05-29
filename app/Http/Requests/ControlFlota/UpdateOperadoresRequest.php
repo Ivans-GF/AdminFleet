@@ -7,8 +7,7 @@ use Illuminate\Validation\Rule;
 use App\Rules\CurpValida;
 use App\Rules\RfcValido;
 use App\Rules\ImssValido;
-
-class OperadoresRequest extends FormRequest
+class UpdateOperadoresRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,10 +24,12 @@ class OperadoresRequest extends FormRequest
      */
     public function rules(): array
     {
+        $operatorId = $this->route('operador');
+
         return [
-            'curp' => ['required', 'string', 'max:18', new CurpValida(),  Rule::unique('operadores', 'curp')],
-            'rfc' => ['required', 'string', 'min:12', 'max:13', new RfcValido(),  Rule::unique('operadores', 'rfc')],
-            'nss' => ['required', 'numeric', 'digits:11', new ImssValido(),  Rule::unique('operadores', 'nss')],
+            'curp' => ['required', 'string', 'max:18', new CurpValida(),  Rule::unique('operadores', 'curp')->ignore($operatorId)],
+            'rfc' => ['required', 'string', 'min:12', 'max:13', new RfcValido(),  Rule::unique('operadores', 'rfc')->ignore($operatorId)],
+            'nss' => ['required', 'numeric', 'digits:11', new ImssValido(),  Rule::unique('operadores', 'nss')->ignore($operatorId)],
             'nombre' => ['required', 'string', 'max:255'],
             'apellido' => [
                 'required',
@@ -37,9 +38,9 @@ class OperadoresRequest extends FormRequest
                 Rule::unique('operadores')->where(function ($query) {
                     $query->where('nombre', $this->nombre)
                         ->where('apellido', $this->apellido);
-                })
+                })->ignore($operatorId)
             ],
-            'telefono' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'telefono')],
+            'telefono' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'telefono')->ignore($operatorId)],
             'domicilio' => ['nullable', 'string', 'max:240'],
             'nota' => ['nullable','string', 'max:650'],
         ];
