@@ -11,21 +11,25 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Francerz\MX_CURP\CURP;
 use Illuminate\Http\RedirectResponse;
+
 class Operadores_ControlFlota extends Controller
 {
-    public function index(): Response{
-         $operadores = Operador::all();
-        return Inertia::render('ControlFlota/Operadores/index',[
-            'operadores' => $operadores 
+    public function index(): Response
+    {
+        $operadores = Operador::all();
+        return Inertia::render('ControlFlota/Operadores/index', [
+            'operadores' => $operadores
         ]);
     }
 
-    public function create(): Response{
+    public function create(): Response
+    {
         return Inertia::render('ControlFlota/Operadores/create');
     }
 
-    public function store (OperadoresRequest $request) : RedirectResponse {
-        $operador = new Operador ($request->validated());
+    public function store(OperadoresRequest $request): RedirectResponse
+    {
+        $operador = new Operador($request->validated());
         $operador->curp = $request->input('curp');
         $operador->rfc = $request->input('rfc');
         $operador->nss = $request->input('nss');
@@ -38,7 +42,7 @@ class Operadores_ControlFlota extends Controller
         $operador->estado = 1;
         $operador->estatus = 1;
         $operador->created_iduser = auth()->id();
-        $operador->updated_iduser = auth()->id(); 
+        $operador->updated_iduser = auth()->id();
         $operador->save();
         return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
     }
@@ -46,15 +50,19 @@ class Operadores_ControlFlota extends Controller
     public function edit(Operador $operador): Response
     {
 
-        if (!$operador) {abort(404, 'Operador no encontrado.');}
+        if (!$operador) {
+            abort(404, 'Operador no encontrado.');
+        }
         return Inertia::render('ControlFlota/Operadores/edit', [
             'operador' => $operador,
         ]);
     }
 
-    public function update(UpdateOperadoresRequest $request, Operador $operador) : RedirectResponse
+    public function update(UpdateOperadoresRequest $request, Operador $operador): RedirectResponse
     {
-        $operador->update($request->validated());
+        $validatedData = $request->validated();
+        $validatedData['updated_iduser'] = auth()->id();
+        $operador->update($validatedData);
         return redirect()->route('operadores.index')->with('success', 'Información de operador modificada correctamente.');
     }
 }

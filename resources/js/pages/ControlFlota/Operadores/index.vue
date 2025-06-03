@@ -81,7 +81,7 @@ const page = usePage<SharedData>();
                                     <TableCell>
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
-                                                <Button size="sm" variant="ghost">
+                                                <Button size="lg" variant="ghost">
                                                     <EllipsisVertical />
                                                 </Button>
                                             </DropdownMenuTrigger>
