@@ -55,4 +55,5 @@ interface Operador {
     domicilio: string;
     nota: string;
 }
+
 export type BreadcrumbItemType = BreadcrumbItem;

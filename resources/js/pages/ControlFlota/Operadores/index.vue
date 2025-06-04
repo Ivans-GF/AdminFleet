@@ -91,9 +91,17 @@ const page = usePage<SharedData>();
                                                         <UserPen class="mr-2 h-4 w-4" /> Modificar datos
                                                     </Link>
                                                 </DropdownMenuItem>
-                                                <DropdownMenuItem><Camera class="mr-2 h-4 w-4" />Gestión foto</DropdownMenuItem>
+                                                <DropdownMenuItem value="bottom">
+                                                    <Link :href="route('operadores.gestionlicencia', operador.id)" class="flex items-center">
+                                                        <Camera class="mr-2 h-4 w-4" />Gestión foto
+                                                    </Link>
+                                                </DropdownMenuItem>
                                                 <DropdownMenuSeparator />
-                                                <DropdownMenuItem><IdCard class="mr-2 h-4 w-4" />Gestión licencia</DropdownMenuItem>
+                                                <DropdownMenuItem value="bottom">
+                                                    <Link :href="route('operadores.gestionlicencia', operador.id)" class="flex items-center">
+                                                        <IdCard class="mr-2 h-4 w-4" />Gestión licencia
+                                                    </Link>
+                                                </DropdownMenuItem>
                                                 <DropdownMenuItem><ClipboardPlus class="mr-2 h-4 w-4" />Gestión acto medico</DropdownMenuItem>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
@@ -103,11 +111,11 @@ const page = usePage<SharedData>();
                                     </TableCell>
                                     <TableCell>{{ operador.nombre }} {{ operador.apellido }}</TableCell>
                                     <TableCell>{{ operador.telefono }}</TableCell>
-                                    <TableCell class="flex items-center justify-center">
+                                    <TableCell class="d-flex align-center justify-center text-center">
                                         <Badge
                                             :class="{
-                                                'bg-red-500 text-white': operador.estado === 0,
-                                                'bg-green-500 text-white': operador.estado === 1,
+                                                'bg-red-400 text-white': operador.estado === 0,
+                                                'bg-green-400 text-white': operador.estado === 1,
                                             }"
                                         >
                                             {{ operador.estatus === 0 ? 'Inactivo' : 'Activo' }}

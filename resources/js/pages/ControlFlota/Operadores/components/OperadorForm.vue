@@ -88,7 +88,7 @@ const handleSubmit = () => {
                 <div class="flex w-full space-x-2">
                     <div class="basis-1xs space-y-2">
                         <Label for="nss">NSS</Label>
-                        <Input id="nss" v-model="form.nss" type="number" :disabled="form.processing" />
+                        <Input id="nss" min="0" v-model="form.nss" type="number" :disabled="form.processing" />
                         <InputError :message="form.errors.nss" />
                     </div>
                     <div class="basis-1xs space-y-2">

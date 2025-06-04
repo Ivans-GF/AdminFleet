@@ -26,10 +26,11 @@ Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']]
     Route::GET('/operadores/index', [Operadores_ControlFlota::class, 'index'])->name('operadores.index');
     Route::GET('/operadores/create', [Operadores_ControlFlota::class, 'create'])->name('operadores.create');
     Route::POST('/operadores/store', [Operadores_ControlFlota::class, 'store'])->name('operadores.store');
-
+    //Editar Operadores
     Route::GET('/operadores/{operador}/edit', [Operadores_ControlFlota::class, 'edit'])->name('operadores.edit');
     Route::PATCH('/operadores/{operador}', [Operadores_ControlFlota::class, 'update'])->name('operadores.update');
-
+    //Gestion de Licencia
+    Route::GET('/operadores/{operador}/gestionlicencia', [Operadores_ControlFlota::class, 'gestionlicencia'])->name('operadores.gestionlicencia');
 
 
 

@@ -65,4 +65,16 @@ class Operadores_ControlFlota extends Controller
         $operador->update($validatedData);
         return redirect()->route('operadores.index')->with('success', 'Información de operador modificada correctamente.');
     }
+
+    public function gestionlicencia(Operador $operador): Response
+    {
+
+        if (!$operador) {
+            abort(404, 'Operador no encontrado.');
+        }
+
+        return Inertia::render('ControlFlota/Operadores/GestionLicencia', [
+            'operador' => $operador,
+        ]);
+    }
 }
