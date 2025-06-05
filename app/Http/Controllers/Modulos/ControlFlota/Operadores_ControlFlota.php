@@ -47,11 +47,11 @@ class Operadores_ControlFlota extends Controller
         return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
     }
 
-    public function edit(Operador $operador): Response
+    public function edit($idoperador)
     {
-
+        $operador = Operador::find($idoperador);
         if (!$operador) {
-            abort(404, 'Operador no encontrado.');
+            return redirect()->route('operadores.index')->with('error', 'Operador no encontrado.');
         }
         return Inertia::render('ControlFlota/Operadores/edit', [
             'operador' => $operador,
@@ -66,11 +66,12 @@ class Operadores_ControlFlota extends Controller
         return redirect()->route('operadores.index')->with('success', 'Información de operador modificada correctamente.');
     }
 
-    public function gestionlicencia(Operador $operador): Response
+    public function gestionlicencia($idoperador)
     {
 
+        $operador = Operador::find($idoperador);
         if (!$operador) {
-            abort(404, 'Operador no encontrado.');
+            return redirect()->route('operadores.index')->with('error', 'Operador no encontrado.');
         }
 
         return Inertia::render('ControlFlota/Operadores/GestionLicencia', [

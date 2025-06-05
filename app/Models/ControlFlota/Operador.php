@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Models\ControlFlota;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+
 class Operador extends Model
 {
     use HasFactory;
