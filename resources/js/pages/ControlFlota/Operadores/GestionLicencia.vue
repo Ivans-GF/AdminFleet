@@ -24,6 +24,7 @@ defineProps<{}>();
         <Head title="Control Flota - Gestión de licencia" />
         <ControlLayout>
             <HeadingSmall title="Gestión de licencia" />
+            dasd
         </ControlLayout>
     </AppLayout>
 </template>
