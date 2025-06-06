@@ -49,6 +49,7 @@ interface Operador {
     curp: string;
     rfc: string;
     nss: number;
+    licencia: string;
     nombre: string;
     apellido: string;
     telefono: string;

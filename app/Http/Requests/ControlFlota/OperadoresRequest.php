@@ -29,6 +29,7 @@ class OperadoresRequest extends FormRequest
             'curp' => ['required', 'string', 'max:18', new CurpValida(),  Rule::unique('operadores', 'curp')],
             'rfc' => ['required', 'string', 'min:12', 'max:13', new RfcValido(),  Rule::unique('operadores', 'rfc')],
             'nss' => ['required', 'numeric', 'digits:11', new ImssValido(),  Rule::unique('operadores', 'nss')],
+            'licencia' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'licencia')],
             'nombre' => ['required', 'string', 'max:255'],
             'apellido' => [
                 'required',
@@ -41,7 +42,7 @@ class OperadoresRequest extends FormRequest
             ],
             'telefono' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'telefono')],
             'domicilio' => ['nullable', 'string', 'max:240'],
-            'nota' => ['nullable','string', 'max:650'],
+            'nota' => ['nullable', 'string', 'max:650'],
         ];
     }
 
@@ -51,30 +52,36 @@ class OperadoresRequest extends FormRequest
             'curp.required' => 'El CURP es obligatorio.',
             'curp.unique' => 'Ya existe un operador con el CURP.',
             'curp.min' => 'El CURP requiere 18 caracteres.',
-            'curp.max' => 'El CURP solo adminte 18 caracteres.',
-            
+            'curp.max' => 'El CURP solo admite 18 caracteres.',
+
             'rfc.required' => 'El RFC es obligatorio.',
             'rfc.unique' => 'Ya existe un operador con el RFC.',
             'rfc.min' => 'El RFC requiere 12 caracteres.',
-            'rfc.max' => 'El RFC solo adminte 13 caracteres.',
+            'rfc.max' => 'El RFC solo admite 13 caracteres.',
 
-            'nss.required' => 'El NSS es obligatorio.',
-            'nss.unique' => 'Ya existe un operador con el NSS.',
-            'nss.digits' => 'El RFC requiere 11 caracteres.',
+            'licencia.required' => 'La Licencia es obligatorio.',
+            'licencia.unique' => 'Ya existe un operador con esta licencia.',
+            'licencia.max' => 'La Licencia admite 20 caracteres.',
+
+            'curp.required' => 'El CURP es obligatorio.',
+            'curp.unique' => 'Ya existe un operador con el CURP.',
+            'curp.min' => 'El CURP requiere 18 caracteres.',
+            'curp.max' => 'El CURP solo admite 18 caracteres.',
+
 
             'nombre.required' => 'El Nombre es obligatorio.',
-            'nombre.max' => 'El Nombre solo adminte 255 caracteres.',
+            'nombre.max' => 'El Nombre solo admite 255 caracteres.',
 
             'apellido.required' => 'El Apellido es obligatorio.',
-            'apellido.max' => 'El Apellido solo adminte 255 caracteres.',
+            'apellido.max' => 'El Apellido solo admite 255 caracteres.',
             'apellido.unique' => 'Ya existe un operador con el mismo nombre y apellido.',
 
             'telefono.required' => 'El Teléfono es obligatorio.',
             'telefono.unique' => 'Ya existe un operador con el Teléfono.',
-            'telefono.max' => 'El Teléfono solo adminte 20 caracteres.',
+            'telefono.max' => 'El Teléfono solo admite 20 caracteres.',
 
-            'domicilio.max' => 'El Domicilio solo adminte 240 caracteres.',
-            'nota.max' => 'El Domicilio solo adminte 650 caracteres.',
+            'domicilio.max' => 'El Domicilio solo admite 240 caracteres.',
+            'nota.max' => 'El Domicilio solo admite 650 caracteres.',
         ];
     }
 }

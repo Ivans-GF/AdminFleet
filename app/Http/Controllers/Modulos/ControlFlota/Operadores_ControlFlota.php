@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ControlFlota\OperadoresRequest;
 use App\Http\Requests\ControlFlota\UpdateOperadoresRequest;
 use App\Models\ControLFlota\Operador;
-use Illuminate\Http\Request;
+use App\Models\ControLFlota\Licencia;
 use Inertia\Inertia;
 use Inertia\Response;
 use Francerz\MX_CURP\CURP;
@@ -16,7 +16,7 @@ class Operadores_ControlFlota extends Controller
 {
     public function index(): Response
     {
-        $operadores = Operador::all();
+        $operadores = Operador::WHERE('estado', 1)->get();
         return Inertia::render('ControlFlota/Operadores/index', [
             'operadores' => $operadores
         ]);
@@ -73,9 +73,10 @@ class Operadores_ControlFlota extends Controller
         if (!$operador) {
             return redirect()->route('operadores.index')->with('error', 'Operador no encontrado.');
         }
-
+        $licencias = Licencia::WHERE('idoperador', $idoperador)->get();
         return Inertia::render('ControlFlota/Operadores/GestionLicencia', [
             'operador' => $operador,
+            'licencias' => $licencias
         ]);
     }
 }

@@ -29,6 +29,7 @@ const form = useForm({
     curp: props.operador?.curp || '',
     rfc: props.operador?.rfc || '',
     nss: props.operador?.nss || '',
+    licencia: props.operador?.licencia || '',
     nombre: props.operador?.nombre || '',
     apellido: props.operador?.apellido || '',
     telefono: props.operador?.telefono || '',
@@ -95,6 +96,11 @@ const handleSubmit = () => {
                         <Label for="telefono">Teléfono</Label>
                         <Input id="telefono" type="tel" v-maska="'## #### ####'" v-model="form.telefono" :disabled="form.processing" />
                         <InputError :message="form.errors.telefono" />
+                    </div>
+                    <div class="basis-1xs space-y-2">
+                        <Label for="licencia">No. Licencia</Label>
+                        <Input id="licencia" v-model="form.licencia" :disabled="form.processing" />
+                        <InputError :message="form.errors.licencia" />
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
