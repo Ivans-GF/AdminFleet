@@ -107,7 +107,15 @@ const page = usePage<SharedData>();
                                         </DropdownMenu>
                                     </TableCell>
                                     <TableCell>
-                                        <div class="flex flex-row space-x-2"><Camera /><IdCard /> <ClipboardPlus /></div>
+                                        <div class="flex flex-row space-x-2">
+                                            <Camera />
+                                            <IdCard
+                                                :class="{
+                                                    'text-red-400': operador.vigencia === null,
+                                                }"
+                                            />
+                                            <ClipboardPlus />
+                                        </div>
                                     </TableCell>
                                     <TableCell>{{ operador.nombre }} {{ operador.apellido }}</TableCell>
                                     <TableCell>{{ operador.telefono }}</TableCell>

@@ -11,12 +11,33 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Francerz\MX_CURP\CURP;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class Operadores_ControlFlota extends Controller
 {
     public function index(): Response
     {
-        $operadores = Operador::WHERE('estado', 1)->get();
+        $operadores = Operador::where('estado', 1)
+            ->leftJoinSub(function ($query) {
+                $query->from('licencias')
+                    ->where('estado', 1)
+                    ->select(
+                        'idoperador',
+                        'fechavigencia',
+                        'fecharenovacion',
+                        // Use a window function to rank licenses by fechavigencia
+                        DB::raw('ROW_NUMBER() OVER (PARTITION BY idoperador ORDER BY fechavigencia DESC) as rn')
+                    );
+            }, 'latest_licenses', function ($join) { // Changed alias to 'latest_licenses' for clarity
+                $join->on('operadores.id', '=', 'latest_licenses.idoperador')
+                    ->where('latest_licenses.rn', 1); // Only join with the top-ranked license for each operator
+            })
+            ->select(
+                'operadores.*',
+                'latest_licenses.fechavigencia as vigencia', // Alias as 'vigencia' for consistency
+                'latest_licenses.fecharenovacion'
+            )
+            ->get();
         return Inertia::render('ControlFlota/Operadores/index', [
             'operadores' => $operadores
         ]);
@@ -30,11 +51,12 @@ class Operadores_ControlFlota extends Controller
     public function store(OperadoresRequest $request): RedirectResponse
     {
         $operador = new Operador($request->validated());
-        $operador->curp = $request->input('curp');
-        $operador->rfc = $request->input('rfc');
+        $operador->curp = strtoupper($request->input('curp'));
+        $operador->rfc = strtoupper($request->input('rfc'));
         $operador->nss = $request->input('nss');
-        $operador->nombre = $request->input('nombre');
-        $operador->apellido = $request->input('apellido');
+        $operador->nombre = mb_convert_case($request->input('nombre'), MB_CASE_TITLE, "UTF-8");
+        $operador->apellido = mb_convert_case($request->input('apellido'), MB_CASE_TITLE, "UTF-8");
+
         $operador->domicilio = $request->input('domicilio');
         $curp = new CURP($request->input('curp'));
         $operador->fechanacimiento = $curp->getFechaNacimiento();
@@ -62,6 +84,12 @@ class Operadores_ControlFlota extends Controller
     {
         $validatedData = $request->validated();
         $validatedData['updated_iduser'] = auth()->id();
+        $validatedData['curp'] = strtoupper($validatedData['curp']);
+        $validatedData['rfc'] = strtoupper($validatedData['rfc']);
+
+        $validatedData['nombre'] = mb_convert_case($validatedData['nombre'], MB_CASE_TITLE, "UTF-8");
+        $validatedData['apellido'] = mb_convert_case($validatedData['apellido'], MB_CASE_TITLE, "UTF-8");
+
         $operador->update($validatedData);
         return redirect()->route('operadores.index')->with('success', 'Información de operador modificada correctamente.');
     }

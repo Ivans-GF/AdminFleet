@@ -59,6 +59,10 @@ class OperadoresRequest extends FormRequest
             'rfc.min' => 'El RFC requiere 12 caracteres.',
             'rfc.max' => 'El RFC solo admite 13 caracteres.',
 
+            'nss.required' => 'El NSS es obligatorio.',
+            'nss.unique' => 'Ya existe un operador con el NSS.',
+            'nss.digits' => 'El RFC requiere 11 caracteres.',
+
             'licencia.required' => 'La Licencia es obligatorio.',
             'licencia.unique' => 'Ya existe un operador con esta licencia.',
             'licencia.max' => 'La Licencia admite 20 caracteres.',
