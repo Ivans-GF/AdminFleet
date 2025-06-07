@@ -29,7 +29,7 @@ const form = useForm({
     curp: props.operador?.curp || '',
     rfc: props.operador?.rfc || '',
     nss: props.operador?.nss || '',
-    licencia: props.operador?.licencia || '',
+    nolicencia: props.operador?.nolicencia || '',
     nombre: props.operador?.nombre || '',
     apellido: props.operador?.apellido || '',
     telefono: props.operador?.telefono || '',
@@ -89,7 +89,7 @@ const handleSubmit = () => {
                 <div class="flex w-full space-x-2">
                     <div class="basis-1xs space-y-2">
                         <Label for="nss">NSS</Label>
-                        <Input id="nss" min="0" v-model="form.nss" type="number" :disabled="form.processing" />
+                        <Input id="nss" v-model="form.nss" :disabled="form.processing" />
                         <InputError :message="form.errors.nss" />
                     </div>
                     <div class="basis-1xs space-y-2">
@@ -98,9 +98,9 @@ const handleSubmit = () => {
                         <InputError :message="form.errors.telefono" />
                     </div>
                     <div class="basis-1xs space-y-2">
-                        <Label for="licencia">No. Licencia</Label>
-                        <Input id="licencia" v-model="form.licencia" :disabled="form.processing" />
-                        <InputError :message="form.errors.licencia" />
+                        <Label for="nolicencia">No. Licencia</Label>
+                        <Input id="nolicencia" v-model="form.nolicencia" :disabled="form.processing" />
+                        <InputError :message="form.errors.nolicencia" />
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">

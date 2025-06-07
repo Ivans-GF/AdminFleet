@@ -17,27 +17,7 @@ class Operadores_ControlFlota extends Controller
 {
     public function index(): Response
     {
-        $operadores = Operador::where('estado', 1)
-            ->leftJoinSub(function ($query) {
-                $query->from('licencias')
-                    ->where('estado', 1)
-                    ->select(
-                        'idoperador',
-                        'fechavigencia',
-                        'fecharenovacion',
-                        // Use a window function to rank licenses by fechavigencia
-                        DB::raw('ROW_NUMBER() OVER (PARTITION BY idoperador ORDER BY fechavigencia DESC) as rn')
-                    );
-            }, 'latest_licenses', function ($join) { // Changed alias to 'latest_licenses' for clarity
-                $join->on('operadores.id', '=', 'latest_licenses.idoperador')
-                    ->where('latest_licenses.rn', 1); // Only join with the top-ranked license for each operator
-            })
-            ->select(
-                'operadores.*',
-                'latest_licenses.fechavigencia as vigencia', // Alias as 'vigencia' for consistency
-                'latest_licenses.fecharenovacion'
-            )
-            ->get();
+        $operadores = Operador::where('estado', 1)->get();
         return Inertia::render('ControlFlota/Operadores/index', [
             'operadores' => $operadores
         ]);
@@ -54,17 +34,19 @@ class Operadores_ControlFlota extends Controller
         $operador->curp = strtoupper($request->input('curp'));
         $operador->rfc = strtoupper($request->input('rfc'));
         $operador->nss = $request->input('nss');
+        $operador->rfc = strtoupper($request->input('rfc'));
+        $operador->nolicencia = strtoupper($request->input('nolicencia'));
+        $operador->telefono = strtoupper($request->input('telefono'));
         $operador->nombre = mb_convert_case($request->input('nombre'), MB_CASE_TITLE, "UTF-8");
         $operador->apellido = mb_convert_case($request->input('apellido'), MB_CASE_TITLE, "UTF-8");
-
         $operador->domicilio = $request->input('domicilio');
         $curp = new CURP($request->input('curp'));
         $operador->fechanacimiento = $curp->getFechaNacimiento();
         $operador->nota = $request->input('nota');
         $operador->estado = 1;
-        $operador->estatus = 1;
         $operador->created_iduser = auth()->id();
         $operador->updated_iduser = auth()->id();
+        $operador->documentos = 0; // No  tiene ningun documento - Falta validacion
         $operador->save();
         return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
     }

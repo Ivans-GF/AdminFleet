@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('curp', 18)->unique();
             $table->string('rfc', 13)->unique();
             $table->string('nss', 12)->unique();
-            $table->string('licencia', 15)->unique();
+            $table->string('nolicencia', 15)->unique();
             // Columnas de texto para nombre y apellido.
             $table->string('nombre');
             $table->string('apellido');
@@ -26,8 +26,10 @@ return new class extends Migration
             $table->string('nota', 650)->nullable();
             // Columna para el estado, tipo entero con un valor predeterminado de 1.
             $table->integer('estado')->default(1);
-            // Columna para el estatus, tipo entero con un valor predeterminado de 0.
-            $table->integer('estatus')->default(0);
+            //estatus de documentos
+            $table->date('licencia')->nullable();
+            $table->date('medico')->nullable();
+            $table->integer('documentos')->default(0);
             // Columnas para los IDs de usuario que crearon y actualizaron el registro.
             // Si estos son claves foráneas a una tabla de `users`,
             $table->integer('created_iduser')->constrained('users');

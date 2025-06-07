@@ -15,7 +15,7 @@ class Operador extends Model
         'curp',
         'rfc',
         'nss',
-        'licencia',
+        'nolicencia',
         'nombre',
         'apellido',
         'telefono',
@@ -23,7 +23,10 @@ class Operador extends Model
         'fechanacimiento',
         'nota',
         'estado',
-        'estatus',
+        'licencia',
+        'medico',
+        'documentos',
+        'created_iduser',
         'updated_iduser',
     ];
 }

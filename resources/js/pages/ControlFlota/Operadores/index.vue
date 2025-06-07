@@ -13,18 +13,10 @@ import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigg
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
-import { type BreadcrumbItem, type SharedData } from '@/types';
+import { type BreadcrumbItem, type Operador, type SharedData } from '@/types';
 import { Head, Link, usePage } from '@inertiajs/vue3';
 import { Camera, CirclePlus, ClipboardPlus, EllipsisVertical, IdCard, Menu, UserPen } from 'lucide-vue-next';
 
-interface Operador {
-    id: number;
-    nombre: string;
-    apellido: string;
-    estatus: number;
-    estado: number;
-    telefono: string;
-}
 const props = defineProps<{
     operadores: Operador[];
 }>();
@@ -111,7 +103,7 @@ const page = usePage<SharedData>();
                                             <Camera />
                                             <IdCard
                                                 :class="{
-                                                    'text-red-400': operador.vigencia === null,
+                                                    'text-red-400': operador.licencia === null,
                                                 }"
                                             />
                                             <ClipboardPlus />

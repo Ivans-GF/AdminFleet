@@ -31,7 +31,7 @@ class UpdateOperadoresRequest extends FormRequest
             'curp' => ['required', 'string', 'max:18', new CurpValida(),  Rule::unique('operadores', 'curp')->ignore($operatorId)],
             'rfc' => ['required', 'string', 'min:12', 'max:13', new RfcValido(),  Rule::unique('operadores', 'rfc')->ignore($operatorId)],
             'nss' => ['required', 'numeric', 'digits:11', new ImssValido(),  Rule::unique('operadores', 'nss')->ignore($operatorId)],
-            'licencia' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'licencia')->ignore($operatorId)],
+            'nolicencia' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'nolicencia')->ignore($operatorId)],
             'nombre' => ['required', 'string', 'max:255'],
             'apellido' => [
                 'required',
@@ -65,9 +65,9 @@ class UpdateOperadoresRequest extends FormRequest
             'nss.unique' => 'Ya existe un operador con el NSS.',
             'nss.digits' => 'El RFC requiere 11 caracteres.',
 
-            'licencia.required' => 'La Licencia es obligatorio.',
-            'licencia.unique' => 'Ya existe un operador con esta licencia.',
-            'licencia.max' => 'La Licencia admite 20 caracteres.',
+            'nolicencia.required' => 'La Licencia es obligatorio.',
+            'nolicencia.unique' => 'Ya existe un operador con esta licencia.',
+            'nolicencia.max' => 'La Licencia admite 20 caracteres.',
 
             'nombre.required' => 'El Nombre es obligatorio.',
             'nombre.max' => 'El Nombre solo admite 255 caracteres.',
