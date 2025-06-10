@@ -1,27 +1,22 @@
 <script setup lang="ts">
 import HeadingSmall from '@/components/HeadingSmall.vue';
-import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
 import { Head } from '@inertiajs/vue3';
 
-import {
-    AlertDialog,
-    AlertDialogAction,
-    AlertDialogCancel,
-    AlertDialogContent,
-    AlertDialogDescription,
-    AlertDialogFooter,
-    AlertDialogHeader,
-    AlertDialogTitle,
-    AlertDialogTrigger,
-} from '@/components/ui/alert-dialog';
+import Button from '@/components/ui/button/Button.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
-import { type BreadcrumbItem } from '@/types';
+import { type BreadcrumbItem, type Operador } from '@/types';
 import { CirclePlus } from 'lucide-vue-next';
+import { ref } from 'vue';
+import DialogCreateLicencia from './components/DialogCreateLicencia.vue';
+
+interface Props {
+    operador?: Operador;
+}
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Operadores',
@@ -32,6 +27,18 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('operadores.create'),
     },
 ];
+const showDialogicencia = ref<boolean>(false);
+
+const Addlicencia = (operadorId: number) => {
+    showDialogicencia.value = true;
+};
+
+const cancelModalicencia = () => {
+    showDialogicencia.value = false;
+};
+const handleLicenciaSave = (licenciaData: any) => {
+    console.log('Datos de la licencia recibidos en el padre:', licenciaData);
+};
 defineProps<{}>();
 </script>
 
@@ -44,24 +51,7 @@ defineProps<{}>();
                 <CardHeader>
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
-                            <AlertDialog>
-                                <AlertDialogTrigger as-child>
-                                    <Button size="sm"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo registro </Button>
-                                </AlertDialogTrigger>
-                                <AlertDialogContent>
-                                    <AlertDialogHeader>
-                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                        <AlertDialogDescription>
-                                            This action cannot be undone. This will permanently delete your account and remove your data from our
-                                            servers.
-                                        </AlertDialogDescription>
-                                    </AlertDialogHeader>
-                                    <AlertDialogFooter>
-                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                                        <AlertDialogAction>Continue</AlertDialogAction>
-                                    </AlertDialogFooter>
-                                </AlertDialogContent>
-                            </AlertDialog>
+                            <Button size="sm" @click="Addlicencia(1)"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador </Button>
                         </div>
                     </CardTitle>
                 </CardHeader>
@@ -69,4 +59,5 @@ defineProps<{}>();
             </Card>
         </ControlLayout>
     </AppLayout>
+    <DialogCreateLicencia v-if="showDialogicencia" :open="showDialogicencia" @close="cancelModalicencia" @save="handleLicenciaSave" />
 </template>
