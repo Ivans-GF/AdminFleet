@@ -106,7 +106,11 @@ const page = usePage<SharedData>();
                                                     'text-red-400': operador.licencia === null,
                                                 }"
                                             />
-                                            <ClipboardPlus />
+                                            <ClipboardPlus
+                                                :class="{
+                                                    'text-red-400': operador.medico === null,
+                                                }"
+                                            />
                                         </div>
                                     </TableCell>
                                     <TableCell>{{ operador.nombre }} {{ operador.apellido }}</TableCell>
@@ -118,7 +122,7 @@ const page = usePage<SharedData>();
                                                 'bg-green-400 text-white': operador.estado === 1,
                                             }"
                                         >
-                                            {{ operador.estatus === 0 ? 'Inactivo' : 'Activo' }}
+                                            {{ operador.estado === 0 ? 'Inactivo' : 'Activo' }}
                                         </Badge>
                                     </TableCell>
                                 </TableRow>

@@ -5,13 +5,23 @@ import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
+import { Head } from '@inertiajs/vue3';
 
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from '@/components/ui/alert-dialog';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import { CirclePlus, Link } from 'lucide-vue-next';
-
+import { CirclePlus } from 'lucide-vue-next';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Operadores',
@@ -34,11 +44,26 @@ defineProps<{}>();
                 <CardHeader>
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
-                            <Button as-child size="sm">
-                                <Link :href="route('operadores.create')"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador</Link>
-                            </Button>
-                        </div></CardTitle
-                    >
+                            <AlertDialog>
+                                <AlertDialogTrigger as-child>
+                                    <Button size="sm"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo registro </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                    <AlertDialogHeader>
+                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                        <AlertDialogDescription>
+                                            This action cannot be undone. This will permanently delete your account and remove your data from our
+                                            servers.
+                                        </AlertDialogDescription>
+                                    </AlertDialogHeader>
+                                    <AlertDialogFooter>
+                                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                                        <AlertDialogAction>Continue</AlertDialogAction>
+                                    </AlertDialogFooter>
+                                </AlertDialogContent>
+                            </AlertDialog>
+                        </div>
+                    </CardTitle>
                 </CardHeader>
                 <CardContent> </CardContent>
             </Card>
