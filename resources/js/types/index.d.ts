@@ -61,4 +61,12 @@ interface Operador {
     documentos: number;
 }
 
+interface Licencia {
+    idoperador: number;
+    archivo: string;
+    categorias: string;
+    fechavigencia: number;
+    fecharenovacion: string;
+}
+
 export type BreadcrumbItemType = BreadcrumbItem;

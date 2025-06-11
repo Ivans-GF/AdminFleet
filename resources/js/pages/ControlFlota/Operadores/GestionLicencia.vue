@@ -17,6 +17,7 @@ import DialogCreateLicencia from './components/DialogCreateLicencia.vue';
 interface Props {
     operador?: Operador;
 }
+
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Operadores',
@@ -27,19 +28,19 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('operadores.create'),
     },
 ];
-const showDialogicencia = ref<boolean>(false);
+const showDialogicencia = ref(false);
 
-const Addlicencia = (operadorId: number) => {
+const handleOpenDialog = () => {
     showDialogicencia.value = true;
 };
-
 const cancelModalicencia = () => {
     showDialogicencia.value = false;
 };
+
 const handleLicenciaSave = (licenciaData: any) => {
-    console.log('Datos de la licencia recibidos en el padre:', licenciaData);
+    showDialogicencia.value = false;
 };
-defineProps<{}>();
+const props = defineProps<Props>();
 </script>
 
 <template>
@@ -51,7 +52,7 @@ defineProps<{}>();
                 <CardHeader>
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
-                            <Button size="sm" @click="Addlicencia(1)"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador </Button>
+                            <Button size="sm" @click="handleOpenDialog"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador </Button>
                         </div>
                     </CardTitle>
                 </CardHeader>
@@ -59,5 +60,11 @@ defineProps<{}>();
             </Card>
         </ControlLayout>
     </AppLayout>
-    <DialogCreateLicencia v-if="showDialogicencia" :open="showDialogicencia" @close="cancelModalicencia" @save="handleLicenciaSave" />
+    <DialogCreateLicencia
+        v-if="showDialogicencia"
+        :open="showDialogicencia"
+        :operadorId="props.operador?.id"
+        @close="cancelModalicencia"
+        @save="handleLicenciaSave"
+    />
 </template>

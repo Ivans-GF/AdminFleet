@@ -12,17 +12,13 @@ class Licencia extends Model
     protected $table = 'licencias';
 
     protected $fillable = [
-        'curp',
-        'rfc',
-        'nss',
-        'nombre',
-        'apellido',
-        'telefono',
-        'domicilio',
-        'fechanacimiento',
-        'nota',
+        'idoperador',
+        'archivo',
+        'categorias',
+        'fechavigencia',
+        'fecharenovacion',
         'estado',
-        'estatus',
+        'created_iduser',
         'updated_iduser',
     ];
 }
