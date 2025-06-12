@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import Input from '@/components/ui/input/Input.vue';
+import Label from '@/components/ui/label/Label.vue';
 import { ref, watch } from 'vue';
 interface Props {
     open: boolean;
@@ -38,12 +40,17 @@ console.log(props.operadorId);
 <template>
     <Dialog :open="showDialog" @update:open="handleClose">
         <DialogTrigger> Edit Profile </DialogTrigger>
-        <DialogContent>
+        <DialogContent class="sm:max-w-lg md:max-w-xl">
             <DialogHeader>
                 <DialogTitle class="font-bold">Crear Nueva Licencia</DialogTitle>
                 <DialogDescription class=""> Ingrese los detalles de la nueva licencia. </DialogDescription>
             </DialogHeader>
-            <div class="flex w-full space-x-2"></div>
+            <div class="grid gap-4 py-4">
+                <div class="grid w-full max-w-sm items-center gap-1.5">
+                    <Label for="picture">Picture</Label>
+                    <Input id="picture" type="file" />
+                </div>
+            </div>
             <DialogFooter>
                 <Button type="button" variant="outline" @click="handleClose"> Cancelar </Button>
                 <Button type="submit" @click="handleSave"> Guardar Licencia </Button>
