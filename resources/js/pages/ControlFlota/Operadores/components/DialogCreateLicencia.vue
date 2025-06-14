@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
+
 import { ref, watch } from 'vue';
 interface Props {
     open: boolean;
@@ -39,16 +41,24 @@ console.log(props.operadorId);
 </script>
 <template>
     <Dialog :open="showDialog" @update:open="handleClose">
-        <DialogTrigger> Edit Profile </DialogTrigger>
+        <DialogTrigger> Crear Nueva Licencia< </DialogTrigger>
         <DialogContent class="sm:max-w-lg md:max-w-xl">
             <DialogHeader>
                 <DialogTitle class="font-bold">Crear Nueva Licencia</DialogTitle>
                 <DialogDescription class=""> Ingrese los detalles de la nueva licencia. </DialogDescription>
             </DialogHeader>
-            <div class="grid gap-4 py-4">
-                <div class="grid w-full max-w-sm items-center gap-1.5">
-                    <Label for="picture">Picture</Label>
-                    <Input id="picture" type="file" />
+            <div class="flex w-full space-x-2">
+                <div class="flex-1 space-y-2">
+                    <Label for="licencia">PDF de Licencia</Label>
+                    <Input id="licencia" type="file" accept=".pdf" />
+                    <InputError />
+                </div>
+            </div>
+            <div class="flex w-full space-x-2">
+                <div class="flex-1 space-y-2">
+                    <Label for="licencia">Fecha vigencia</Label>
+
+                    <InputError />
                 </div>
             </div>
             <DialogFooter>

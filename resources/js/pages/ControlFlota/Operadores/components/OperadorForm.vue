@@ -105,7 +105,7 @@ const handleSubmit = () => {
                 </div>
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">
-                        <Label for="v">Domicilio</Label>
+                        <Label for="domicilio">Domicilio</Label>
                         <Input id="domicilio" v-model="form.domicilio" :disabled="form.processing" />
                         <InputError :message="form.errors.domicilio" />
                     </div>
