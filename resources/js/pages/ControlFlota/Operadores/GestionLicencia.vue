@@ -33,13 +33,10 @@ const showDialogicencia = ref(false);
 const handleOpenDialog = () => {
     showDialogicencia.value = true;
 };
-const cancelModalicencia = () => {
+const cancelModaDialog = () => {
     showDialogicencia.value = false;
 };
 
-const handleLicenciaSave = (licenciaData: any) => {
-    showDialogicencia.value = false;
-};
 const props = defineProps<Props>();
 </script>
 
@@ -60,11 +57,5 @@ const props = defineProps<Props>();
             </Card>
         </ControlLayout>
     </AppLayout>
-    <DialogCreateLicencia
-        v-if="showDialogicencia"
-        :open="showDialogicencia"
-        :operadorId="props.operador?.id"
-        @close="cancelModalicencia"
-        @save="handleLicenciaSave"
-    />
+    <DialogCreateLicencia v-if="showDialogicencia" :open="showDialogicencia" :operadorId="props.operador?.id" @close="cancelModaDialog" />
 </template>

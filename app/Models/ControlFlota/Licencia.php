@@ -16,7 +16,6 @@ class Licencia extends Model
         'archivo',
         'categorias',
         'fechavigencia',
-        'fecharenovacion',
         'estado',
         'created_iduser',
         'updated_iduser',

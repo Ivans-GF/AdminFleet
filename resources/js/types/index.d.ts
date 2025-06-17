@@ -65,8 +65,8 @@ interface Licencia {
     idoperador: number;
     archivo: string;
     categorias: string;
-    fechavigencia: number;
-    fecharenovacion: string;
+    fechavigencia: string;
+    comentario: string;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
