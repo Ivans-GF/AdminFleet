@@ -31,6 +31,7 @@ Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']]
     Route::PATCH('/operadores/{operador}', [Operadores_ControlFlota::class, 'update'])->name('operadores.update');
     //Gestion de Licencia
     Route::GET('/operadores/{operador}/gestionlicencia', [Operadores_ControlFlota::class, 'gestionlicencia'])->name('operadores.gestionlicencia');
+    Route::POST('/operadores/storelicencia', [Operadores_ControlFlota::class, 'storelicencia'])->name('operadores.storelicencia');
 
 
 

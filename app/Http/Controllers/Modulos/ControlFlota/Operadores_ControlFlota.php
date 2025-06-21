@@ -5,6 +5,10 @@ namespace App\Http\Controllers\Modulos\ControlFlota;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ControlFlota\OperadoresRequest;
 use App\Http\Requests\ControlFlota\UpdateOperadoresRequest;
+use App\Http\Requests\ControlFlota\LicenciaRequest;
+
+
+
 use App\Models\ControLFlota\Operador;
 use App\Models\ControLFlota\Licencia;
 use Inertia\Inertia;
@@ -88,5 +92,11 @@ class Operadores_ControlFlota extends Controller
             'operador' => $operador,
             'licencias' => $licencias
         ]);
+    }
+
+      public function storelicencia(LicenciaRequest $request): RedirectResponse
+    {
+
+        return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
     }
 }

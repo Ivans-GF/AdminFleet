@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import InputError from '@/components/InputError.vue';
 import { Button } from '@/components/ui/button';
-import Checkbox from '@/components/ui/checkbox/Checkbox.vue';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
+import Separator from '@/components/ui/separator/Separator.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import { Licencia } from '@/types';
 import { useForm } from '@inertiajs/vue3';
@@ -22,9 +22,10 @@ const handleClose = () => {
     form.reset();
     emit('close');
 };
+
 const form = useForm({
     idoperador: props.operadorId,
-    licencia: null as File | null, // Correct type for file upload
+    licencia: null as File | null,
     vigencia: '',
     categorias: [] as string[],
     comentario: '',
@@ -41,17 +42,18 @@ const handleFileChange = (event: Event) => {
 };
 
 const handleSubmit = () => {
-    console.log('Aqui paso el FORM:', form.data()); // Still useful for debugging
-    // form.post(route('licencias.store'), {
-    // Assuming 'licencias.store' is your route name for saving
-    //   onSuccess: () => {
-    //       emit('save'); // Emit a 'save' event on successful submission
-    //      handleClose(); // Close the dialog after saving
-    //   },
-    //   forceFormData: true, // Crucial for file uploads with Inertia
-    //});
+    console.log('FORM DATA BEING SENT:', form.data());
+    form.post(route('operadores.storelicencia'), {
+        preserveScroll: true,
+        onSuccess: () => {
+            emit('save');
+            handleClose();
+        },
+        forceFormData: true, // This is essential for sending files and arrays correctly via FormData
+    });
 };
-console.log(props.operadorId);
+
+console.log('Operador ID:', props.operadorId); // This console.log is fine
 </script>
 <template>
     <Dialog :open="showDialog" @update:open="handleClose">
@@ -74,28 +76,7 @@ console.log(props.operadorId);
                         <InputError :message="form.errors.vigencia" />
                     </div>
                 </div>
-                <div class="flex flex-wrap items-center justify-center space-x-5">
-                    <Label>Tipo de Licencia</Label>
-                    <div class="flex items-center space-x-5">
-                        <div class="flex items-center space-x-2">
-                            <Checkbox id="type-a" value="A" v-model:checked="form.categorias" />
-                            <Label for="type-a">Tipo A</Label>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <Checkbox id="type-b" value="B" v-model:checked="form.categorias" />
-                            <Label for="type-b">Tipo B</Label>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <Checkbox id="type-c" value="C" v-model:checked="form.categorias" />
-                            <Label for="type-c">Tipo C</Label>
-                        </div>
-                        <div class="flex items-center space-x-2">
-                            <Checkbox id="type-e" value="E" v-model:checked="form.categorias" />
-                            <Label for="type-e">Tipo E</Label>
-                        </div>
-                    </div>
-                    <InputError :message="form.errors.categorias" />
-                </div>
+                <Separator />
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">
                         <Label for="comentario">Comentario</Label>
