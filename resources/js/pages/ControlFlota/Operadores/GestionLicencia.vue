@@ -1,16 +1,15 @@
 <script setup lang="ts">
 import HeadingSmall from '@/components/HeadingSmall.vue';
+import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import CardTitle from '@/components/ui/card/CardTitle.vue';
-import { Head } from '@inertiajs/vue3';
-
-import Button from '@/components/ui/button/Button.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
 import { type BreadcrumbItem, type Operador } from '@/types';
-import { CirclePlus } from 'lucide-vue-next';
+import { Head, Link } from '@inertiajs/vue3';
+import { CirclePlus, UndoDot } from 'lucide-vue-next';
 import { ref } from 'vue';
 import DialogCreateLicencia from './components/DialogCreateLicencia.vue';
 
@@ -28,6 +27,7 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('operadores.create'),
     },
 ];
+
 const showDialogicencia = ref(false);
 
 const handleOpenDialog = () => {
@@ -49,6 +49,9 @@ const props = defineProps<Props>();
                 <CardHeader>
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
+                            <Button as-child variant="outline">
+                                <Link :href="route('operadores.index')"> <UndoDot class="mr-2 h-4 w-4" />Regresar</Link>
+                            </Button>
                             <Button size="sm" @click="handleOpenDialog"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador </Button>
                         </div>
                     </CardTitle>

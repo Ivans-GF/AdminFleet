@@ -14,6 +14,7 @@ class Licencia extends Model
     protected $fillable = [
         'idoperador',
         'archivo',
+        'nolicencia',
         'categorias',
         'fechavigencia',
         'estado',

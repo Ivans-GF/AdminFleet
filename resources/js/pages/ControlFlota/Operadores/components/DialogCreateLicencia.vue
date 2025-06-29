@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Separator from '@/components/ui/separator/Separator.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import { Licencia } from '@/types';
@@ -15,6 +16,17 @@ interface Props {
     licencia?: Licencia;
     operadorId?: number;
 }
+const items = [
+    {
+        id: 'recents',
+        label: 'Recents',
+    },
+    {
+        id: 'home',
+        label: 'Home',
+    },
+] as const;
+
 const props = defineProps<Props>();
 const emit = defineEmits(['close', 'save']);
 const showDialog = ref(props.open);
@@ -27,7 +39,7 @@ const form = useForm({
     idoperador: props.operadorId,
     licencia: null as File | null,
     vigencia: '',
-    categorias: [] as string[],
+    categorias: [] as string[], // Initialize as an empty array of strings
     comentario: '',
 });
 
@@ -42,14 +54,15 @@ const handleFileChange = (event: Event) => {
 };
 
 const handleSubmit = () => {
-    console.log('FORM DATA BEING SENT:', form.data());
+    console.log('FORM DATA BEING SENT (raw):', form.data());
+    console.log('Categorias array before sending:', form.categorias); // <--- Add this
     form.post(route('operadores.storelicencia'), {
         preserveScroll: true,
         onSuccess: () => {
             emit('save');
             handleClose();
         },
-        forceFormData: true, // This is essential for sending files and arrays correctly via FormData
+        forceFormData: true,
     });
 };
 
@@ -76,6 +89,21 @@ console.log('Operador ID:', props.operadorId); // This console.log is fine
                         <InputError :message="form.errors.vigencia" />
                     </div>
                 </div>
+                <Select>
+                    <SelectTrigger class="w-[180px]">
+                        <SelectValue placeholder="Select a fruit" />
+                    </SelectTrigger>
+                    <SelectContent>
+                        <SelectGroup>
+                            <SelectLabel>Fruits</SelectLabel>
+                            <SelectItem value="apple"> Apple </SelectItem>
+                            <SelectItem value="banana"> Banana </SelectItem>
+                            <SelectItem value="blueberry"> Blueberry </SelectItem>
+                            <SelectItem value="grapes"> Grapes </SelectItem>
+                            <SelectItem value="pineapple"> Pineapple </SelectItem>
+                        </SelectGroup>
+                    </SelectContent>
+                </Select>
                 <Separator />
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">

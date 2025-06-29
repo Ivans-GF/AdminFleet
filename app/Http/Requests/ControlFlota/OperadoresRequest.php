@@ -29,7 +29,6 @@ class OperadoresRequest extends FormRequest
             'curp' => ['required', 'string', 'max:18', new CurpValida(),  Rule::unique('operadores', 'curp')],
             'rfc' => ['required', 'string', 'min:12', 'max:13', new RfcValido(),  Rule::unique('operadores', 'rfc')],
             'nss' => ['required', 'numeric', 'digits:11', new ImssValido(),  Rule::unique('operadores', 'nss')],
-            'nolicencia' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'nolicencia')],
             'nombre' => ['required', 'string', 'max:255'],
             'apellido' => [
                 'required',
@@ -62,10 +61,6 @@ class OperadoresRequest extends FormRequest
             'nss.required' => 'El NSS es obligatorio.',
             'nss.unique' => 'Ya existe un operador con el NSS.',
             'nss.digits' => 'El NSS requiere 11 caracteres.',
-
-            'nolicencia.required' => 'La Licencia es obligatorio.',
-            'nolicencia.unique' => 'Ya existe un operador con esta licencia.',
-            'nolicencia.max' => 'La Licencia admite 20 caracteres.',
 
             'curp.required' => 'El CURP es obligatorio.',
             'curp.unique' => 'Ya existe un operador con el CURP.',

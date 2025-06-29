@@ -39,7 +39,6 @@ class Operadores_ControlFlota extends Controller
         $operador->rfc = strtoupper($request->input('rfc'));
         $operador->nss = $request->input('nss');
         $operador->rfc = strtoupper($request->input('rfc'));
-        $operador->nolicencia = strtoupper($request->input('nolicencia'));
         $operador->telefono = strtoupper($request->input('telefono'));
         $operador->nombre = mb_convert_case($request->input('nombre'), MB_CASE_TITLE, "UTF-8");
         $operador->apellido = mb_convert_case($request->input('apellido'), MB_CASE_TITLE, "UTF-8");

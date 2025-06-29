@@ -15,7 +15,6 @@ class Operador extends Model
         'curp',
         'rfc',
         'nss',
-        'nolicencia',
         'nombre',
         'apellido',
         'telefono',

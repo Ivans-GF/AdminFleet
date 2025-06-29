@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('curp', 18)->unique();
             $table->string('rfc', 13)->unique();
             $table->string('nss', 12)->unique();
-            $table->string('nolicencia', 15)->unique();
             // Columnas de texto para nombre y apellido.
             $table->string('nombre');
             $table->string('apellido');

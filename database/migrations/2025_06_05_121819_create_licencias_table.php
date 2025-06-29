@@ -17,7 +17,8 @@ return new class extends Migration
             $table->foreignId('idoperador')->constrained('operadores');
             // Columna para la ruta del archivo, opcional (nullable), con una longitud de 800 caracteres.
             $table->string('archivo', 800)->nullable();
-            $table->string('categorias', 45);
+            $table->string('nolicencia', 15);
+            $table->string('categoria', 45);
             $table->date('fechavigencia');
             $table->string('comentario', 450);
             // Columna para el estado, tipo entero con un valor predeterminado de 1.

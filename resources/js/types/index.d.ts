@@ -49,7 +49,6 @@ interface Operador {
     curp: string;
     rfc: string;
     nss: number;
-    nolicencia: string;
     nombre: string;
     apellido: string;
     telefono: string;
