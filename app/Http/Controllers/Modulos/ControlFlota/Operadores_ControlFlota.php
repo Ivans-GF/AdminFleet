@@ -7,8 +7,6 @@ use App\Http\Requests\ControlFlota\OperadoresRequest;
 use App\Http\Requests\ControlFlota\UpdateOperadoresRequest;
 use App\Http\Requests\ControlFlota\LicenciaRequest;
 
-
-
 use App\Models\ControLFlota\Operador;
 use App\Models\ControLFlota\Licencia;
 use Inertia\Inertia;
