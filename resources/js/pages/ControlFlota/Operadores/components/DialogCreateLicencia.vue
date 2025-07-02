@@ -4,7 +4,12 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from '@/components/ui/select';
+import Select from '@/components/ui/select/Select.vue';
+import SelectContent from '@/components/ui/select/SelectContent.vue';
+import SelectGroup from '@/components/ui/select/SelectGroup.vue';
+import SelectItem from '@/components/ui/select/SelectItem.vue';
+import SelectTrigger from '@/components/ui/select/SelectTrigger.vue';
+import SelectValue from '@/components/ui/select/SelectValue.vue';
 import Separator from '@/components/ui/separator/Separator.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import { Licencia } from '@/types';
@@ -16,16 +21,6 @@ interface Props {
     licencia?: Licencia;
     operadorId?: number;
 }
-const items = [
-    {
-        id: 'recents',
-        label: 'Recents',
-    },
-    {
-        id: 'home',
-        label: 'Home',
-    },
-] as const;
 
 const props = defineProps<Props>();
 const emit = defineEmits(['close', 'save']);
@@ -39,7 +34,7 @@ const form = useForm({
     idoperador: props.operadorId,
     licencia: null as File | null,
     vigencia: '',
-    categorias: [] as string[], // Initialize as an empty array of strings
+    categorias: '',
     comentario: '',
 });
 
@@ -79,6 +74,25 @@ console.log('Operador ID:', props.operadorId); // This console.log is fine
             <form @submit.prevent="handleSubmit" class="space-y-2">
                 <div class="flex w-full space-x-2">
                     <div class="flex-2 space-y-2">
+                        <Label>Categoría de licencia</Label>
+                        <Select v-model="form.categorias">
+                            <SelectTrigger class="w-[200px]">
+                                <SelectValue placeholder="Categorías" />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectGroup>
+                                    <SelectItem value="B" title="B) CARGA">B</SelectItem>
+                                    <SelectItem value="E" title="E) CARGA TRACTOCAMIONES DOBLEMENTE ARTICULADOS TSR/TSS">E</SelectItem>
+                                    <SelectItem value="BE" title="B) CARGA &#10;E) CARGA TRACTOCAMIONES DOBLEMENTE ARTICULADOS TSR/TSS"
+                                        >BE</SelectItem
+                                    >
+                                </SelectGroup>
+                            </SelectContent>
+                        </Select>
+                    </div>
+                </div>
+                <div class="flex w-full space-x-2">
+                    <div class="flex-2 space-y-2">
                         <Label for="licencia">PDF de Licencia</Label>
                         <Input id="licencia" type="file" accept=".pdf" @change="handleFileChange" />
                         <InputError :message="form.errors.licencia" />
@@ -89,21 +103,6 @@ console.log('Operador ID:', props.operadorId); // This console.log is fine
                         <InputError :message="form.errors.vigencia" />
                     </div>
                 </div>
-                <Select>
-                    <SelectTrigger class="w-[180px]">
-                        <SelectValue placeholder="Select a fruit" />
-                    </SelectTrigger>
-                    <SelectContent>
-                        <SelectGroup>
-                            <SelectLabel>Fruits</SelectLabel>
-                            <SelectItem value="apple"> Apple </SelectItem>
-                            <SelectItem value="banana"> Banana </SelectItem>
-                            <SelectItem value="blueberry"> Blueberry </SelectItem>
-                            <SelectItem value="grapes"> Grapes </SelectItem>
-                            <SelectItem value="pineapple"> Pineapple </SelectItem>
-                        </SelectGroup>
-                    </SelectContent>
-                </Select>
                 <Separator />
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">

@@ -63,9 +63,11 @@ interface Operador {
 interface Licencia {
     idoperador: number;
     archivo: string;
+    nolicencia: string;
     categorias: string;
     fechavigencia: string;
     comentario: string;
+    estado: number;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

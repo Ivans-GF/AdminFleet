@@ -34,10 +34,6 @@ Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']]
     Route::POST('/operadores/storelicencia', [Operadores_ControlFlota::class, 'storelicencia'])->name('operadores.storelicencia');
 
 
-
-
-
-
     //Unidades
     Route::GET('unidades/index', [Unidades_ControlFlota::class, 'index'])->name('unidades.index');
 
