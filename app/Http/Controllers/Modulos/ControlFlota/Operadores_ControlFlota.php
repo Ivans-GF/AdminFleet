@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Francerz\MX_CURP\CURP;
 use Illuminate\Http\RedirectResponse;
+use Carbon\Carbon;
 
 class Operadores_ControlFlota extends Controller
 {
@@ -96,14 +97,15 @@ class Operadores_ControlFlota extends Controller
         if ($request->hasFile('archivo')) {
             $file = $request->file('archivo');
             $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('licencias', $fileName, 'public');
+            $disk = env('FILESYSTEM_DRIVER', 'public'); // Obtener el disco del .env, con 'public' como fallback
+            $filePath = $file->storeAs('licencias', $fileName, $disk);
         }
 
         $licencia = new Licencia($request->validated());
         $licencia->idoperador = $request->input('idoperador');
         $licencia->nolicencia = strtoupper($request->input('nolicencia'));
         $licencia->archivo = $filePath;
-        $licencia->fechavigencia = $request->input('fechavigencia');
+        $licencia->fechavigencia = Carbon::parse($request->input('fechavigencia'))->format('Y-m-d');
         $licencia->categoria = strtoupper($request->input('categoria'));
         $licencia->comentario = $request->input('comentario');
         $licencia->estado = 1;

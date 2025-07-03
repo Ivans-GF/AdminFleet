@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('licencias', function (Blueprint $table) {
             // Define el ID auto-incrementable como clave primaria.
             $table->id();
-            $table->foreignId('idoperador')->constrained('operadores');
+               // Clave foránea para el operador. Asume que 'operadores' tiene una columna 'id'.
+            // onDelete('cascade') opcional: si un operador se elimina, sus licencias también.
+            $table->foreignId('idoperador')->constrained('operadores')->onDelete('cascade');
             // Columna para la ruta del archivo, opcional (nullable), con una longitud de 800 caracteres.
             $table->string('archivo', 800)->nullable();
             $table->string('nolicencia', 15);
