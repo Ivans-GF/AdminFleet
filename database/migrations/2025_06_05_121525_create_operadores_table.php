@@ -25,14 +25,15 @@ return new class extends Migration
             $table->string('nota', 650)->nullable();
             // Columna para el estado, tipo entero con un valor predeterminado de 1.
             $table->integer('estado')->default(1);
-            //estatus de documentos
-            $table->date('licencia')->nullable();
-            $table->date('medico')->nullable();
-            $table->integer('documentos')->default(0);
+
+            $table->integer('licencia')->nullable();
+            $table->integer('medico')->nullable();
+
+            $table->integer('documentos')->nullable();
             // Columnas para los IDs de usuario que crearon y actualizaron el registro.
             // Si estos son claves foráneas a una tabla de `users`,
-            $table->integer('created_iduser')->constrained('users');
-            $table->integer('updated_iduser')->constrained('users');
+            $table->foreignId('created_iduser')->constrained('users');
+            $table->foreignId('updated_iduser')->nullable()->constrained('users');
             // Columnas `created_at` y `updated_at` (timestamps)
             $table->timestamps();
         });

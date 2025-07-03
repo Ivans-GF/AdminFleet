@@ -12,8 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('licencias', function (Blueprint $table) {
-            // Define el ID auto-incrementable como clave primaria.
-            $table->id();
+             $table->id();
                // Clave foránea para el operador. Asume que 'operadores' tiene una columna 'id'.
             // onDelete('cascade') opcional: si un operador se elimina, sus licencias también.
             $table->foreignId('idoperador')->constrained('operadores')->onDelete('cascade');
@@ -22,7 +21,7 @@ return new class extends Migration
             $table->string('nolicencia', 15);
             $table->string('categoria', 45);
             $table->date('fechavigencia');
-            $table->string('comentario', 450);
+            $table->string('comentario', 450)->nullable();
             // Columna para el estado, tipo entero con un valor predeterminado de 1.
             // 1 Activo se mantiene el archivo
             //0 Inactivo se borra el archivo.

@@ -112,6 +112,24 @@ class Operadores_ControlFlota extends Controller
         $licencia->created_iduser = auth()->id();
         $licencia->updated_iduser = auth()->id();
         $licencia->save();
+
+      // Encuentra el operador por su ID
+        $operador = Operador::find($licencia->idoperador);
+        // Verifica si el operador existe para evitar errores
+        if ($operador) {
+            $mostRecentActiveLicense = Licencia::where('idoperador', $operador->id)
+            ->where('estado', 1)
+            ->orderByDesc('fechavigencia')
+            ->first();
+            if ($mostRecentActiveLicense) {
+                $operador->licencia = $mostRecentActiveLicense->id;
+            } else {
+                $operador->licencia = null;
+            }
+            $operador->save();
+        } else {
+            return redirect()->back()->with('error', 'Error al ingresar la licencia.');
+        }
         return redirect()->back()->with('success', 'Licencia almacenada correctamente.');
     }
 }
