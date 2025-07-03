@@ -27,7 +27,17 @@ class LicenciaRequest extends FormRequest
             'archivo' => ['required', 'file', 'mimes:pdf', 'max:10240'], // archivos: PDF, Word, Excel, máx 10MB
             'nolicencia' => ['required', 'string', 'min:5', 'max:15'],
             'categoria' => ['required', 'in:B,E,BE'],
-            'fechavigencia' => ['required', 'date'],
+            'fechavigencia' => [
+                'required',
+                'date',
+                // Rule to check for unique combination of idoperador and fechavigencia
+                Rule::unique('licencias')->where(function ($query) {
+                    return $query->where('idoperador', $this->idoperador)
+                                 ->where('fechavigencia', $this->fechavigencia);
+                })
+                // If you are also using this form for editing and need to ignore the current record:
+                // ->ignore($this->licencia?->id, 'id') // Assuming 'licencia' is the route model binding for an existing license
+            ],
             'comentario' => ['nullable', 'string', 'max:450'],
         ];
     }
@@ -54,6 +64,7 @@ class LicenciaRequest extends FormRequest
 
             'fechavigencia.required' => 'La fecha de vigencia es obligatoria.',
             'fechavigencia.date' => 'La fecha de vigencia debe ser una fecha válida.',
+            'fechavigencia.unique' => 'Ya existe una licencia con la misma fecha de vigencia.',
 
             'comentario.max' => 'El Comentario solo admite 450 caracteres.',
 
