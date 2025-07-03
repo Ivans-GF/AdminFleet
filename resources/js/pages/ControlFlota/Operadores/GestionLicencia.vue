@@ -49,7 +49,7 @@ const props = defineProps<Props>();
                 <CardHeader>
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
-                            <Button as-child variant="outline">
+                            <Button as-child variant="outline" size="sm">
                                 <Link :href="route('operadores.index')"> <UndoDot class="mr-2 h-4 w-4" />Regresar</Link>
                             </Button>
                             <Button size="sm" @click="handleOpenDialog"> <CirclePlus class="mr-2 h-4 w-4" />Nuevo operador </Button>

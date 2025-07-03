@@ -24,9 +24,11 @@ class LicenciaRequest extends FormRequest
     {
         return [
             'idoperador' => ['required', 'integer', 'exists:operadores,id'],
-            'licencia' => ['required', 'file', 'mimes:pdf', 'max:10240'], // archivos: PDF, Word, Excel, máx 10MB
-            'categorias' => ['required', 'array', 'min:1', 'in:A,B,C,E'], // 'categorias' must be an array, and have at least one item
-            'vigencia' => ['required', 'date'], // Debe ser una fecha válida y no anterior a hoy
+            'archivo' => ['required', 'file', 'mimes:pdf', 'max:10240'], // archivos: PDF, Word, Excel, máx 10MB
+            'nolicencia' => ['required', 'string', 'min:5', 'max:15'],
+            'categoria' => ['required', 'in:B,E,BE'],
+            'fechavigencia' => ['required', 'date'],
+            'comentario' => ['nullable', 'string', 'max:450'],
         ];
     }
 
@@ -37,16 +39,24 @@ class LicenciaRequest extends FormRequest
             'idoperador.integer' => 'El ID del operador debe ser un número entero.',
             'idoperador.exists' => 'El ID del operador no existe en nuestros registros.',
 
-            'licencia.required' => 'Debes seleccionar un archivo.',
-            'licencia.file' => 'El campo archivo debe ser un archivo válido.',
-            'licencia.mimes' => 'El archivo debe ser de tipo: PDF',
-            'licencia.max' => 'El tamaño máximo del archivo es 10 MB.',
+            'archivo.required' => 'Debes seleccionar un archivo.',
+            'archivo.file' => 'El campo archivo debe ser un archivo válido.',
+            'archivo.mimes' => 'El archivo debe ser de tipo: PDF',
+            'archivo.max' => 'El tamaño máximo del archivo es 10 MB.',
 
-            'categorias.required' => 'Las categorías son obligatorias.',
-            'categorias.string' => 'Las categorías deben ser texto.',
+            'nolicencia.required' => 'El No. de licencia es obligatorio.',
+            'nolicencia.min' => 'El No. de licencia requiere 5 caracteres.',
+            'nolicencia.max' => 'El No. de licencia solo admite 15 caracteres.',
 
-            'vigencia.required' => 'La fecha de vigencia es obligatoria.',
-            'vigencia.date' => 'La fecha de vigencia debe ser una fecha válida.',
+            'categoria.required' => 'La Categoría son obligatorias.',
+            'categoria.string' => 'La Categoría deben ser texto.',
+            'categoria.in' => 'Opción no valida.',
+
+            'fechavigencia.required' => 'La fecha de vigencia es obligatoria.',
+            'fechavigencia.date' => 'La fecha de vigencia debe ser una fecha válida.',
+
+            'comentario.max' => 'El Comentario solo admite 450 caracteres.',
+
         ];
     }
 }

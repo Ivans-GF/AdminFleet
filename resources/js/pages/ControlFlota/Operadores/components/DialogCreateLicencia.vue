@@ -32,9 +32,10 @@ const handleClose = () => {
 
 const form = useForm({
     idoperador: props.operadorId,
-    licencia: null as File | null,
-    vigencia: '',
-    categorias: '',
+    nolicencia: '',
+    archivo: null as File | null,
+    fechavigencia: '',
+    categoria: '',
     comentario: '',
 });
 
@@ -42,15 +43,15 @@ const form = useForm({
 const handleFileChange = (event: Event) => {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length > 0) {
-        form.licencia = target.files[0]; // Assigns the actual File object
+        form.archivo = target.files[0]; // Assigns the actual File object
     } else {
-        form.licencia = null;
+        form.archivo = null;
     }
 };
 
 const handleSubmit = () => {
     console.log('FORM DATA BEING SENT (raw):', form.data());
-    console.log('Categorias array before sending:', form.categorias); // <--- Add this
+    console.log('Categorias array before sending:', form.categoria); // <--- Add this
     form.post(route('operadores.storelicencia'), {
         preserveScroll: true,
         onSuccess: () => {
@@ -73,10 +74,15 @@ console.log('Operador ID:', props.operadorId); // This console.log is fine
             </DialogHeader>
             <form @submit.prevent="handleSubmit" class="space-y-2">
                 <div class="flex w-full space-x-2">
+                    <div class="basis-2xs space-y-2">
+                        <Label for="nolicencia">No. Licencia</Label>
+                        <Input id="nolicencia" v-model="form.nolicencia" :disabled="form.processing" />
+                        <InputError :message="form.errors.nolicencia" />
+                    </div>
                     <div class="flex-2 space-y-2">
                         <Label>Categoría de licencia</Label>
-                        <Select v-model="form.categorias">
-                            <SelectTrigger class="w-[200px]">
+                        <Select v-model="form.categoria">
+                            <SelectTrigger class="w-[100%]">
                                 <SelectValue placeholder="Categorías" />
                             </SelectTrigger>
                             <SelectContent>
@@ -89,18 +95,19 @@ console.log('Operador ID:', props.operadorId); // This console.log is fine
                                 </SelectGroup>
                             </SelectContent>
                         </Select>
+                        <InputError :message="form.errors.categoria" />
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
                     <div class="flex-2 space-y-2">
-                        <Label for="licencia">PDF de Licencia</Label>
-                        <Input id="licencia" type="file" accept=".pdf" @change="handleFileChange" />
-                        <InputError :message="form.errors.licencia" />
+                        <Label for="archivo">PDF de Licencia</Label>
+                        <Input id="archivo" type="file" accept=".pdf" @change="handleFileChange" />
+                        <InputError :message="form.errors.archivo" />
                     </div>
                     <div class="basis-1xs space-y-2">
-                        <Label for="vigencia">Fecha vigencia</Label>
-                        <Input id="vigencia" type="date" v-model="form.vigencia" />
-                        <InputError :message="form.errors.vigencia" />
+                        <Label for="fechavigencia">Fecha vigencia</Label>
+                        <Input id="fechavigencia" type="date" v-model="form.fechavigencia" />
+                        <InputError :message="form.errors.fechavigencia" />
                     </div>
                 </div>
                 <Separator />

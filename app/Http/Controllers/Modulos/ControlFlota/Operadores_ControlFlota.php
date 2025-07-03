@@ -6,14 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ControlFlota\OperadoresRequest;
 use App\Http\Requests\ControlFlota\UpdateOperadoresRequest;
 use App\Http\Requests\ControlFlota\LicenciaRequest;
-
+use Illuminate\Support\Str; // <-- Add this line
 use App\Models\ControLFlota\Operador;
 use App\Models\ControLFlota\Licencia;
 use Inertia\Inertia;
 use Inertia\Response;
 use Francerz\MX_CURP\CURP;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\DB;
 
 class Operadores_ControlFlota extends Controller
 {
@@ -93,7 +92,24 @@ class Operadores_ControlFlota extends Controller
 
       public function storelicencia(LicenciaRequest $request): RedirectResponse
     {
+        $filePath = null;
+        if ($request->hasFile('archivo')) {
+            $file = $request->file('archivo');
+            $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
+            $filePath = $file->storeAs('licencias', $fileName, 'public');
+        }
 
-        return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
+        $licencia = new Licencia($request->validated());
+        $licencia->idoperador = $request->input('idoperador');
+        $licencia->nolicencia = strtoupper($request->input('nolicencia'));
+        $licencia->archivo = $filePath;
+        $licencia->fechavigencia = $request->input('fechavigencia');
+        $licencia->categoria = strtoupper($request->input('categoria'));
+        $licencia->comentario = $request->input('comentario');
+        $licencia->estado = 1;
+        $licencia->created_iduser = auth()->id();
+        $licencia->updated_iduser = auth()->id();
+        $licencia->save();
+        return redirect()->back()->with('success', 'Licencia almacenada correctamente.');
     }
 }

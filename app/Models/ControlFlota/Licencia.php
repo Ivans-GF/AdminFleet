@@ -15,10 +15,12 @@ class Licencia extends Model
         'idoperador',
         'archivo',
         'nolicencia',
-        'categorias',
+        'categoria',
         'fechavigencia',
+        'comentario',
         'estado',
         'created_iduser',
         'updated_iduser',
     ];
 }
+
