@@ -50,8 +50,6 @@ const handleFileChange = (event: Event) => {
 };
 
 const handleSubmit = () => {
-    console.log('FORM DATA BEING SENT (raw):', form.data());
-    console.log('Categorias array before sending:', form.categoria); // <--- Add this
     form.post(route('operadores.storelicencia'), {
         preserveScroll: true,
         onSuccess: () => {
@@ -61,8 +59,6 @@ const handleSubmit = () => {
         forceFormData: true,
     });
 };
-
-console.log('Operador ID:', props.operadorId); // This console.log is fine
 </script>
 <template>
     <Dialog :open="showDialog" @update:open="handleClose">

@@ -56,15 +56,20 @@ interface Operador {
     nota: string;
     estado: number;
     licencia: string;
+    categoria?: string; // Opciones  para realizar consultar
+    archivo?: string; // Opciones para realizar consultar
+    fechavigencia?: date; // Opciones para realizar consultar
+    dias_restanteslicencia?: date; // Opciones para realizar consultar
     medico: string;
     documentos: number;
 }
 
 interface Licencia {
+    id: number;
     idoperador: number;
     archivo: string;
     nolicencia: string;
-    categorias: string;
+    categoria: string;
     fechavigencia: string;
     comentario: string;
     estado: number;

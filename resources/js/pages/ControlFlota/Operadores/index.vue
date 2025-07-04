@@ -4,12 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import Button from '@/components/ui/button/Button.vue';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
-import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu.vue';
-import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuContent.vue';
-import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue';
-import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue';
-import DropdownMenuSeparator from '@/components/ui/dropdown-menu/DropdownMenuSeparator.vue';
-import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
@@ -30,7 +25,6 @@ const breadcrumbs: BreadcrumbItem[] = [
 
 const page = usePage<SharedData>();
 </script>
-
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Control Flota - Operadores" />
@@ -64,8 +58,9 @@ const page = usePage<SharedData>();
                                     <TableHead></TableHead>
                                     <TableHead>Indicadores</TableHead>
                                     <TableHead>Nombre operador</TableHead>
+                                    <TableHead class="flex items-center justify-center">Licencia</TableHead>
                                     <TableHead>Teléfono</TableHead>
-                                    <TableHead class="flex items-center justify-center">Estatus</TableHead>
+                                    <TableHead class="flex items-center justify-center">Estado</TableHead>
                                 </TableRow>
                             </TableHeader>
                             <TableBody>
@@ -73,12 +68,12 @@ const page = usePage<SharedData>();
                                     <TableCell>
                                         <DropdownMenu>
                                             <DropdownMenuTrigger>
-                                                <Button size="lg" variant="ghost">
+                                                <Button size="sm" variant="ghost">
                                                     <EllipsisVertical />
                                                 </Button>
                                             </DropdownMenuTrigger>
                                             <DropdownMenuContent>
-                                                <DropdownMenuItem value="bottom">
+                                                <DropdownMenuItem size="sm" value="bottom">
                                                     <Link :href="route('operadores.edit', operador.id)" class="flex items-center">
                                                         <UserPen class="mr-2 h-4 w-4" /> Modificar datos
                                                     </Link>
@@ -100,20 +95,39 @@ const page = usePage<SharedData>();
                                     </TableCell>
                                     <TableCell>
                                         <div class="flex flex-row space-x-2">
-                                            <Camera />
-                                            <IdCard
-                                                :class="{
-                                                    'text-red-400': operador.licencia === null,
-                                                }"
-                                            />
+                                            <a
+                                                v-if="operador.archivo"
+                                                title="Indicador de licencia - click para ver licencia del operador"
+                                                :href="`/storage/${operador.archivo}`"
+                                                target="_blank"
+                                            >
+                                                <IdCard
+                                                    :class="{
+                                                        'text-red-400':
+                                                            operador.dias_restanteslicencia !== null && operador.dias_restanteslicencia <= 0,
+                                                        'text-yellow-400':
+                                                            operador.dias_restanteslicencia !== null &&
+                                                            operador.dias_restanteslicencia > 0 &&
+                                                            operador.dias_restanteslicencia <= 30, // Yellow for expiring soon (1-30 days)
+                                                        'text-green-400':
+                                                            operador.dias_restanteslicencia !== null && operador.dias_restanteslicencia > 30,
+                                                    }"
+                                            /></a>
+                                            <span v-else title="Sin registro de licencia para este operador">
+                                                <IdCard class="" />
+                                            </span>
                                             <ClipboardPlus
                                                 :class="{
                                                     'text-red-400': operador.medico === null,
                                                 }"
                                             />
+                                            <Camera />
                                         </div>
                                     </TableCell>
                                     <TableCell>{{ operador.nombre }} {{ operador.apellido }}</TableCell>
+                                    <TableCell class="d-flex align-center justify-center text-center">
+                                        {{ operador.categoria ?? 'N/D' }}
+                                    </TableCell>
                                     <TableCell>{{ operador.telefono }}</TableCell>
                                     <TableCell class="d-flex align-center justify-center text-center">
                                         <Badge

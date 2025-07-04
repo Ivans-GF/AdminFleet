@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ControlFlota\OperadoresRequest;
 use App\Http\Requests\ControlFlota\UpdateOperadoresRequest;
 use App\Http\Requests\ControlFlota\LicenciaRequest;
-use Illuminate\Support\Str; // <-- Add this line
+use Illuminate\Support\Str;
 use App\Models\ControLFlota\Operador;
 use App\Models\ControLFlota\Licencia;
 use Inertia\Inertia;
@@ -19,7 +19,22 @@ class Operadores_ControlFlota extends Controller
 {
     public function index(): Response
     {
-        $operadores = Operador::where('estado', 1)->get();
+        $operadores = Operador::where('operadores.estado', 1)
+        ->leftJoin('licencias', 'operadores.id', '=', 'licencias.idoperador')
+        ->select('operadores.*', 'licencias.fechavigencia', 'licencias.categoria', 'licencias.archivo')
+        ->get();
+
+        // Iterate through the results to calculate days remaining
+        $operadores->each(function ($operador) {
+            if ($operador->fechavigencia) {
+                $fechaVigencia = Carbon::parse($operador->fechavigencia);
+                $diasRestantes = now()->diffInDays($fechaVigencia, false); // 'false' to get signed difference (negative for past dates)
+                $operador->dias_restanteslicencia = $diasRestantes;
+            } else {
+                $operador->dias_restanteslicencia = null; // Or some other default value if no validity date
+            }
+        });
+
         return Inertia::render('ControlFlota/Operadores/index', [
             'operadores' => $operadores
         ]);
@@ -112,24 +127,30 @@ class Operadores_ControlFlota extends Controller
         $licencia->created_iduser = auth()->id();
         $licencia->updated_iduser = auth()->id();
         $licencia->save();
-
-      // Encuentra el operador por su ID
-        $operador = Operador::find($licencia->idoperador);
-        // Verifica si el operador existe para evitar errores
-        if ($operador) {
-            $mostRecentActiveLicense = Licencia::where('idoperador', $operador->id)
-            ->where('estado', 1)
-            ->orderByDesc('fechavigencia')
-            ->first();
-            if ($mostRecentActiveLicense) {
-                $operador->licencia = $mostRecentActiveLicense->id;
-            } else {
-                $operador->licencia = null;
-            }
-            $operador->save();
-        } else {
-            return redirect()->back()->with('error', 'Error al ingresar la licencia.');
+        // Update the operator's license information using the new function
+        $result = $this->updateOperatorLicense($licencia->idoperador);
+        if (!$result) {
+            return redirect()->back()->with('error', 'Error al ingresar la licencia o actualizar el operador.');
         }
         return redirect()->back()->with('success', 'Licencia almacenada correctamente.');
     }
+
+    protected function updateOperatorLicense(int $idoperador): bool
+    {
+        $operador = Operador::find($idoperador);
+
+        if ($operador) {
+            $mostRecentActiveLicense = Licencia::where('idoperador', $operador->id)
+                ->where('estado', 1)
+                ->orderByDesc('fechavigencia')
+                ->first();
+
+            $operador->licencia = $mostRecentActiveLicense ? $mostRecentActiveLicense->id : null;
+            $operador->save();
+            return true;
+        }
+
+        return false; // Operator not found
+    }
+
 }
