@@ -20,7 +20,7 @@ class Operadores_ControlFlota extends Controller
     public function index(): Response
     {
         $operadores = Operador::where('operadores.estado', 1)
-        ->leftJoin('licencias', 'operadores.id', '=', 'licencias.idoperador')
+        ->leftjoin('licencias', 'operadores.id', '=', 'licencias.idoperador')
         ->select('operadores.*', 'licencias.fechavigencia', 'licencias.categoria', 'licencias.archivo')
         ->get();
 
@@ -113,7 +113,15 @@ class Operadores_ControlFlota extends Controller
             $file = $request->file('archivo');
             $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
             $disk = env('FILESYSTEM_DRIVER', 'public'); // Obtener el disco del .env, con 'public' como fallback
-            $filePath = $file->storeAs('licencias', $fileName, $disk);
+            try {
+$filePath = $file->storeAs('licencias', $fileName, ['disk' => $disk, 'visibility' => 'public']);
+                            \Log::info("Archivo almacenado exitosamente: {$filePath } en el disco {$disk} con nombre {$fileName}");
+
+            } catch (\Exception $e) {
+                \Log::error("Error al subir archivo de licencia al disco {$disk}: " . $e->getMessage() . " - Trace: " . $e->getTraceAsString());
+                return redirect()->back()->withInput($request->except('archivo'))
+                ->with('error', 'Error al subir el archivo de la licencia: ' . $e->getMessage());
+            }
         }
 
         $licencia = new Licencia($request->validated());
@@ -126,7 +134,7 @@ class Operadores_ControlFlota extends Controller
         $licencia->estado = 1;
         $licencia->created_iduser = auth()->id();
         $licencia->updated_iduser = auth()->id();
-        $licencia->save();
+        //$licencia->save();
         // Update the operator's license information using the new function
         $result = $this->updateOperatorLicense($licencia->idoperador);
         if (!$result) {
