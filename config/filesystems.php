@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DRIVER', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'local'),
 
     /*
     |--------------------------------------------------------------------------
@@ -46,24 +46,17 @@ return [
             'throw' => false,
             'report' => false,
         ],
-
-    's3' => [
-        'driver' => 's3',
-        'key' => env('AWS_ACCESS_KEY_ID'),
-        'secret' => env('AWS_SECRET_ACCESS_KEY'),
-        'region' => env('AWS_DEFAULT_REGION'),
-        'bucket' => env('AWS_BUCKET'),
-        'url' => env('AWS_URL'), // Important for generating public URLs
-        'endpoint' => env('AWS_ENDPOINT'), // Critical for connecting to MinIO
-        'use_path_style_endpoint' => env('AWS_USE_PATH_STYLE_ENDPOINT', false), // Set to true in .env
-        'throw' => false, // Set to true in production for strict error handling
-        'options' => [
-            'verify' => false,
+        'minio' => [
+            'driver' => 's3',
+            'endpoint' => env('MINIO_ENDPOINT'),
+            'use_path_style_endpoint' => env('MINIO_USE_PATH_STYLE_ENDPOINT', true),
+            'key' => env('MINIO_ACCESS_KEY'),
+            'secret' => env('MINIO_SECRET_KEY'),
+            'region' => 'us-east-1', // Add region if necessary
+            'bucket' => env('MINIO_BUCKET'),
+            'url' => env('MINIO_ENDPOINT') . '/' . env('MINIO_BUCKET'),
         ],
     ],
-
-    ],
-
     /*
     |--------------------------------------------------------------------------
     | Symbolic Links

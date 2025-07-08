@@ -60,6 +60,7 @@ interface Operador {
     archivo?: string; // Opciones para realizar consultar
     fechavigencia?: date; // Opciones para realizar consultar
     dias_restanteslicencia?: date; // Opciones para realizar consultar
+    archivo_licencia_url?: string; // Opciones para realizar consultar
     medico: string;
     documentos: number;
 }

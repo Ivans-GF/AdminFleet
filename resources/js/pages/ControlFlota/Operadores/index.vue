@@ -96,9 +96,9 @@ const page = usePage<SharedData>();
                                     <TableCell>
                                         <div class="flex flex-row space-x-2">
                                             <a
-                                                v-if="operador.archivo"
+                                                v-if="operador.archivo_licencia_url"
                                                 title="Indicador de licencia - click para ver licencia del operador"
-                                                :href="`/storage/${operador.archivo}`"
+                                                :href="operador.archivo_licencia_url"
                                                 target="_blank"
                                             >
                                                 <IdCard

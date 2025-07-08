@@ -14,6 +14,8 @@ use Inertia\Response;
 use Francerz\MX_CURP\CURP;
 use Illuminate\Http\RedirectResponse;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log; // Import the Log facade
 
 class Operadores_ControlFlota extends Controller
 {
@@ -23,7 +25,6 @@ class Operadores_ControlFlota extends Controller
         ->leftjoin('licencias', 'operadores.id', '=', 'licencias.idoperador')
         ->select('operadores.*', 'licencias.fechavigencia', 'licencias.categoria', 'licencias.archivo')
         ->get();
-
         // Iterate through the results to calculate days remaining
         $operadores->each(function ($operador) {
             if ($operador->fechavigencia) {
@@ -32,6 +33,16 @@ class Operadores_ControlFlota extends Controller
                 $operador->dias_restanteslicencia = $diasRestantes;
             } else {
                 $operador->dias_restanteslicencia = null; // Or some other default value if no validity date
+            }
+
+               // --- Implementación para MinIO público ---
+            $operador->archivo_licencia_url = null;
+            if ($operador->archivo) {
+                try {
+                    $operador->archivo_licencia_url = Storage::disk('minio')->url($operador->archivo);
+                } catch (\Exception $e) {
+                    $operador->archivo_licencia_url = null; // En caso de error, no enviar URL inválida
+                }
             }
         });
 
@@ -94,7 +105,6 @@ class Operadores_ControlFlota extends Controller
 
     public function gestionlicencia($idoperador)
     {
-
         $operador = Operador::find($idoperador);
         if (!$operador) {
             return redirect()->route('operadores.index')->with('error', 'Operador no encontrado.');
@@ -106,21 +116,18 @@ class Operadores_ControlFlota extends Controller
         ]);
     }
 
-      public function storelicencia(LicenciaRequest $request): RedirectResponse
+    public function storelicencia(LicenciaRequest $request): RedirectResponse
     {
         $filePath = null;
         if ($request->hasFile('archivo')) {
-            $file = $request->file('archivo');
+           $file = $request->file('archivo');
             $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
-            $disk = env('FILESYSTEM_DRIVER', 'public'); // Obtener el disco del .env, con 'public' como fallback
-            try {
-$filePath = $file->storeAs('licencias', $fileName, ['disk' => $disk, 'visibility' => 'public']);
-                            \Log::info("Archivo almacenado exitosamente: {$filePath } en el disco {$disk} con nombre {$fileName}");
-
+            $folderPath = 'operadores/licencias'; // Define a folder within your disk for licenses
+        try {
+            $filePath = Storage::disk('minio')->putFileAs($folderPath, $file, $fileName);
             } catch (\Exception $e) {
-                \Log::error("Error al subir archivo de licencia al disco {$disk}: " . $e->getMessage() . " - Trace: " . $e->getTraceAsString());
                 return redirect()->back()->withInput($request->except('archivo'))
-                ->with('error', 'Error al subir el archivo de la licencia: ' . $e->getMessage());
+                    ->with('error', 'Error al subir el archivo de la licencia: ' . $e->getMessage());
             }
         }
 
@@ -134,13 +141,13 @@ $filePath = $file->storeAs('licencias', $fileName, ['disk' => $disk, 'visibility
         $licencia->estado = 1;
         $licencia->created_iduser = auth()->id();
         $licencia->updated_iduser = auth()->id();
-        //$licencia->save();
+        $licencia->save();
         // Update the operator's license information using the new function
         $result = $this->updateOperatorLicense($licencia->idoperador);
         if (!$result) {
             return redirect()->back()->with('error', 'Error al ingresar la licencia o actualizar el operador.');
         }
-        return redirect()->back()->with('success', 'Licencia almacenada correctamente.');
+        return redirect()->back()->with('success', 'Licencia almacenada correctamentes.');
     }
 
     protected function updateOperatorLicense(int $idoperador): bool
