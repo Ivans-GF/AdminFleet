@@ -124,7 +124,7 @@ class Operadores_ControlFlota extends Controller
             $fileName = Str::random(40) . '.' . $file->getClientOriginalExtension();
             $folderPath = 'operadores/licencias'; // Define a folder within your disk for licenses
         try {
-            $filePath = Storage::disk('minio')->putFileAs($folderPath, $file, $fileName);
+            $filePath = Storage::disk(env('DISK_DRIVER'))->putFileAs($folderPath, $file, $fileName);
             } catch (\Exception $e) {
                 return redirect()->back()->withInput($request->except('archivo'))
                     ->with('error', 'Error al subir el archivo de la licencia: ' . $e->getMessage());
@@ -168,4 +168,19 @@ class Operadores_ControlFlota extends Controller
         return false; // Operator not found
     }
 
+    public function getOperadorLicense($idlicencia)
+    {
+        $licencia = Licencia::findOrFail($idlicencia);
+        $filePath = $licencia->archivo;
+        $diskDriver = env('DISK_DRIVER');
+        if ($filePath && Storage::disk($diskDriver)->exists($filePath)) {
+            $displayFilename = 'Licencia.pdf';
+            return Storage::disk($diskDriver)->response($filePath, $displayFilename, [
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'inline; filename="' . $displayFilename . '"'
+            ]);
+        } else {
+            abort(404, 'Archivo de licencia no encontrado.');
+        }
+    }
 }
