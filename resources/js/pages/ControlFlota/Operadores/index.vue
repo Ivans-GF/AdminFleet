@@ -23,7 +23,7 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const page = usePage<SharedData>();
+//const page = usePage<SharedData>();
 </script>
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
