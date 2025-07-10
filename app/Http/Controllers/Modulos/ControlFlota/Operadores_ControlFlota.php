@@ -22,7 +22,7 @@ class Operadores_ControlFlota extends Controller
     public function index(): Response
     {
         $operadores = Operador::where('operadores.estado', 1)
-        ->leftjoin('licencias', 'operadores.id', '=', 'licencias.idoperador')
+        ->leftjoin('licencias', 'operadores.id', '=', 'licencias.operador_id')
         ->select('operadores.*', 'licencias.fechavigencia', 'licencias.categoria', 'licencias.archivo')
         ->get();
         // Iterate through the results to calculate days remaining
@@ -70,10 +70,12 @@ class Operadores_ControlFlota extends Controller
         $curp = new CURP($request->input('curp'));
         $operador->fechanacimiento = $curp->getFechaNacimiento();
         $operador->nota = $request->input('nota');
+        $operador->nolicencia = strtoupper($request->input('nolicencia'));
+        $operador->noexpediente = strtoupper($request->input('noexpediente'));
         $operador->estado = 1;
         $operador->created_iduser = auth()->id();
         $operador->updated_iduser = auth()->id();
-        $operador->documentos = 0; // No  tiene ningun documento - Falta validacion
+        $operador->documentosestatus = 0; // No  tiene ningun documento - Falta validacion
         $operador->save();
         return redirect()->route('operadores.index')->with('success', 'Operador creado correctamente.');
     }

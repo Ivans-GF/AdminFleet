@@ -19,11 +19,11 @@ return new class extends Migration
                   ->onDelete('set null')
                   ->after('nolicencia'); // O la columna anterior que desees
 
-            $table->foreignId('medico_id')
+            $table->foreignId('expediente_id')
                   ->nullable()
-                  ->constrained('medicos')
+                  ->constrained('expedientesmedicos')
                   ->onDelete('set null')
-                  ->after('nomedico'); // O la columna anterior que desees
+                  ->after('noexpediente'); // O la columna anterior que desees
 
         });
     }
@@ -37,8 +37,8 @@ return new class extends Migration
             $table->dropForeign(['licencia_id']);
             $table->dropColumn('licencia_id'); // Elimina la columna licencia_id
 
-            $table->dropForeign(['medico_id']);
-            $table->dropColumn('medico_id'); // Elimina la columna medico_id
+            $table->dropForeign(['expediente_id']);
+            $table->dropColumn('expediente_id'); // Elimina la columna expediente_id
         });
     }
 };

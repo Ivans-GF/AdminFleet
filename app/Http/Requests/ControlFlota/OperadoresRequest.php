@@ -40,6 +40,8 @@ class OperadoresRequest extends FormRequest
                 })
             ],
             'telefono' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'telefono')],
+            'nolicencia' => ['required', 'string', 'max:20',  Rule::unique('operadores', 'nolicencia')],
+            'noexpediente' => ['required', 'numeric', 'digits_between:1,15',  Rule::unique('operadores', 'noexpediente')],
             'domicilio' => ['nullable', 'string', 'max:240'],
             'nota' => ['nullable', 'string', 'max:650'],
         ];
@@ -67,7 +69,6 @@ class OperadoresRequest extends FormRequest
             'curp.min' => 'El CURP requiere 18 caracteres.',
             'curp.max' => 'El CURP solo admite 18 caracteres.',
 
-
             'nombre.required' => 'El Nombre es obligatorio.',
             'nombre.max' => 'El Nombre solo admite 255 caracteres.',
 
@@ -78,6 +79,14 @@ class OperadoresRequest extends FormRequest
             'telefono.required' => 'El Teléfono es obligatorio.',
             'telefono.unique' => 'Ya existe un operador con el Teléfono.',
             'telefono.max' => 'El Teléfono solo admite 20 caracteres.',
+
+            'nolicencia.required' => 'El No. de licencia es obligatorio.',
+            'nolicencia.unique' => 'Ya existe un operador con el No. de licencia.',
+            'nolicencia.max' => 'El No. de licencia solo admite 20 caracteres.',
+
+            'noexpediente.required' => 'El No. de expediente es obligatorio.',
+            'noexpediente.unique' => 'Ya existe un operador con el No. de expediente.',
+            'noexpediente.digits_between' => 'El No. de expediente solo admite 15 caracteres como max..',
 
             'domicilio.max' => 'El Domicilio solo admite 240 caracteres.',
             'nota.max' => 'El Domicilio solo admite 650 caracteres.',

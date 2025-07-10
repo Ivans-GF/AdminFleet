@@ -8,8 +8,8 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
-import { type BreadcrumbItem, type Operador, type SharedData } from '@/types';
-import { Head, Link, usePage } from '@inertiajs/vue3';
+import { type BreadcrumbItem, type Operador } from '@/types';
+import { Head, Link } from '@inertiajs/vue3';
 import { Camera, CirclePlus, ClipboardPlus, EllipsisVertical, IdCard, Menu, UserPen } from 'lucide-vue-next';
 
 const props = defineProps<{
@@ -22,8 +22,6 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('operadores.index'),
     },
 ];
-
-//const page = usePage<SharedData>();
 </script>
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">

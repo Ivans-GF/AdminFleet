@@ -26,8 +26,8 @@ return new class extends Migration
             // Columna para el estado, tipo entero con un valor predeterminado de 1.
             $table->integer('estado')->default(1);
             $table->string('nolicencia', 15);
-            $table->string('nomedico', 15);
-            $table->integer('documentos_estatus')->nullable();
+            $table->integer('noexpediente')->nullable();
+            $table->integer('documentosestatus')->nullable();
             // Columnas para los IDs de usuario que crearon y actualizaron el registro.
             // Si estos son claves foráneas a una tabla de `users`,
             $table->foreignId('created_iduser')->constrained('users')->onDelete('set null'); // Make sure this column is nullable if using set null

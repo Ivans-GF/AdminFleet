@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import Input from '@/components/ui/input/Input.vue';
 import Label from '@/components/ui/label/Label.vue';
+import Separator from '@/components/ui/separator/Separator.vue';
 import Textarea from '@/components/ui/textarea/Textarea.vue';
 import { type Operador } from '@/types';
 import { Link, useForm } from '@inertiajs/vue3';
@@ -32,6 +33,8 @@ const form = useForm({
     nombre: props.operador?.nombre || '',
     apellido: props.operador?.apellido || '',
     telefono: props.operador?.telefono || '',
+    nolicencia: props.operador?.nolicencia || '',
+    noexpediente: props.operador?.noexpediente || '',
     domicilio: props.operador?.domicilio || '',
     nota: props.operador?.nota || '',
 });
@@ -86,6 +89,14 @@ const handleSubmit = () => {
                     </div>
                 </div>
                 <div class="flex w-full space-x-2">
+                    <div class="flex-1 space-y-2">
+                        <Label for="domicilio">Domicilio</Label>
+                        <Input id="domicilio" v-model="form.domicilio" :disabled="form.processing" />
+                        <InputError :message="form.errors.domicilio" />
+                    </div>
+                </div>
+                <Separator />
+                <div class="flex w-full items-start space-x-2">
                     <div class="basis-1xs space-y-2">
                         <Label for="nss">NSS</Label>
                         <Input id="nss" v-model="form.nss" :disabled="form.processing" />
@@ -96,14 +107,20 @@ const handleSubmit = () => {
                         <Input id="telefono" type="tel" v-maska="'## #### ####'" v-model="form.telefono" :disabled="form.processing" />
                         <InputError :message="form.errors.telefono" />
                     </div>
-                </div>
-                <div class="flex w-full space-x-2">
-                    <div class="flex-1 space-y-2">
-                        <Label for="domicilio">Domicilio</Label>
-                        <Input id="domicilio" v-model="form.domicilio" :disabled="form.processing" />
-                        <InputError :message="form.errors.domicilio" />
+                    <div class="flex flex-1 justify-center space-x-2">
+                        <div class="basis-3xs space-y-2">
+                            <Label for="nolicencia">No. Licencia</Label>
+                            <Input id="nolicencia" v-model="form.nolicencia" :disabled="form.processing" />
+                            <InputError :message="form.errors.nolicencia" />
+                        </div>
+                        <div class="basis-3xs space-y-2">
+                            <Label for="noexpediente">No. Expediente medico</Label>
+                            <Input id="noexpediente" v-model="form.noexpediente" :disabled="form.processing" />
+                            <InputError :message="form.errors.noexpediente" />
+                        </div>
                     </div>
                 </div>
+                <Separator />
                 <div class="flex w-full space-x-2">
                     <div class="flex-1 space-y-2">
                         <Label for="nota">Nota de operador</Label>

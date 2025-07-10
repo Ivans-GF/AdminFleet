@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('medicos', function (Blueprint $table) {
+        Schema::create('expedientesmedicos', function (Blueprint $table) {
   // Define el ID auto-incrementable como clave primaria.
             $table->id();
                // Clave foránea para el operador. Asume que 'operadores' tiene una columna 'id'.
@@ -37,6 +37,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('medicos');
+        Schema::dropIfExists('expedientesmedicos');
     }
 };

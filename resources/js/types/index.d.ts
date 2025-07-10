@@ -55,14 +55,14 @@ interface Operador {
     domicilio: string;
     nota: string;
     estado: number;
-    licencia: string;
+    nolicencia: string;
+    noexpediente: number;
+    documentosestatus: number;
     categoria?: string; // Opciones  para realizar consultar
     archivo?: string; // Opciones para realizar consultar
     fechavigencia?: date; // Opciones para realizar consultar
     dias_restanteslicencia?: date; // Opciones para realizar consultar
     archivo_licencia_url?: string; // Opciones para realizar consultar
-    medico: string;
-    documentos: number;
 }
 
 interface Licencia {
