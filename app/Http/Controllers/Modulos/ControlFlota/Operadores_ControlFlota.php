@@ -105,13 +105,13 @@ class Operadores_ControlFlota extends Controller
         return redirect()->route('operadores.index')->with('success', 'Información de operador modificada correctamente.');
     }
 
-    public function gestionlicencia($idoperador)
+    public function gestionlicencia($operador_id)
     {
-        $operador = Operador::find($idoperador);
+        $operador = Operador::find($operador_id);
         if (!$operador) {
-            return redirect()->route('operadores.index')->with('error', 'Operador no encontrado.');
+            return redirect()->route('operadores.insdex')->with('error', 'Operador no encontrado.');
         }
-        $licencias = Licencia::WHERE('idoperador', $idoperador)->get();
+        $licencias = Licencia::WHERE('operador_id', $operador_id)->get();
         return Inertia::render('ControlFlota/Operadores/GestionLicencia', [
             'operador' => $operador,
             'licencias' => $licencias

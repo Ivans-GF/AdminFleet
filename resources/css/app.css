@@ -166,8 +166,9 @@
     --chart-4: hsl(280 65% 60%);
     --chart-5: hsl(340 75% 55%);
 
-    --sidebar-background: hsl(0 0% 7%);
-    --sidebar-foreground: hsl(0 0% 95.9%);
+    /* Propuesta de cambio para sidebar-background */
+    --sidebar-background: hsl(215 27.9% 10%); /* Un poco más oscuro que el secondary, pero con el mismo matiz azulado */
+    --sidebar-foreground: hsl(0 0% 95.9%); /* Se mantiene bien con el nuevo fondo */
     --sidebar-primary: hsl(360, 100%, 100%);
     --sidebar-primary-foreground: hsl(0 0% 100%);
     --sidebar-accent: hsl(0 0% 15.9%);
