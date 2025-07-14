@@ -3,15 +3,13 @@ import HeadingSmall from '@/components/HeadingSmall.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
-
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
 import { type BreadcrumbItem, type Operador } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
 import { Camera, ChevronsUpDown, CirclePlus, ClipboardPlus, EllipsisVertical, IdCard, Menu, UserPen } from 'lucide-vue-next';
 import { h } from 'vue';
-
-import MydataTable from '@/components/mycomponents/Datatable/MydataTable.vue';
+import MydataTable from '@/components/mycomponents/Datatable/MyDataTable.vue';
 import CardHeader from '@/components/ui/card/CardHeader.vue';
 import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue';
 import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue';
@@ -50,7 +48,8 @@ const columns = [
                         h(Button, { size: 'lg', variant: 'ghost' }, () => h(EllipsisVertical)),
                     ),
                     // FIX: Wrap the DropdownMenuContent children in a function for the default slot
-                    h(DropdownMenuContent, {}, () => [ // Changed from array directly to a function returning the array
+                    h(DropdownMenuContent, {}, () => [
+                        // Changed from array directly to a function returning the array
                         h(
                             DropdownMenuItem,
                             { value: 'bottom' },

@@ -109,7 +109,7 @@ class Operadores_ControlFlota extends Controller
     {
         $operador = Operador::find($operador_id);
         if (!$operador) {
-            return redirect()->route('operadores.insdex')->with('error', 'Operador no encontrado.');
+            return redirect()->route('operadores.index')->with('error', 'Operador no encontrado.');
         }
         $licencias = Licencia::WHERE('operador_id', $operador_id)->get();
         return Inertia::render('ControlFlota/Operadores/GestionLicencia', [
@@ -134,8 +134,7 @@ class Operadores_ControlFlota extends Controller
         }
 
         $licencia = new Licencia($request->validated());
-        $licencia->idoperador = $request->input('idoperador');
-        $licencia->nolicencia = strtoupper($request->input('nolicencia'));
+        $licencia->operador_id = $request->input('operador_id');
         $licencia->archivo = $filePath;
         $licencia->fechavigencia = Carbon::parse($request->input('fechavigencia'))->format('Y-m-d');
         $licencia->categoria = strtoupper($request->input('categoria'));
@@ -145,24 +144,22 @@ class Operadores_ControlFlota extends Controller
         $licencia->updated_iduser = auth()->id();
         $licencia->save();
         // Update the operator's license information using the new function
-        $result = $this->updateOperatorLicense($licencia->idoperador);
+        $result = $this->updateOperatorLicense($licencia->operador_id);
         if (!$result) {
             return redirect()->back()->with('error', 'Error al ingresar la licencia o actualizar el operador.');
         }
         return redirect()->back()->with('success', 'Licencia almacenada correctamentes.');
     }
 
-    protected function updateOperatorLicense(int $idoperador): bool
+    protected function updateOperatorLicense(int $operador_id): bool
     {
-        $operador = Operador::find($idoperador);
+        $operador = Operador::find($operador_id);
 
         if ($operador) {
-            $mostRecentActiveLicense = Licencia::where('idoperador', $operador->id)
-                ->where('estado', 1)
-                ->orderByDesc('fechavigencia')
-                ->first();
+            $mostRecentActiveLicense = Licencia::where('operador_id', $operador->id)
+                ->where('estado', 1)->orderByDesc('fechavigencia')->first();
 
-            $operador->licencia = $mostRecentActiveLicense ? $mostRecentActiveLicense->id : null;
+            $operador->licencia_id = $mostRecentActiveLicense ? $mostRecentActiveLicense->id : null;
             $operador->save();
             return true;
         }

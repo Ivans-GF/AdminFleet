@@ -31,7 +31,7 @@ const handleClose = () => {
 };
 
 const form = useForm({
-    idoperador: props.operadorId,
+    operador_id: props.operadorId,
     nolicencia: '',
     archivo: null as File | null,
     fechavigencia: '',
@@ -70,10 +70,10 @@ const handleSubmit = () => {
             </DialogHeader>
             <form @submit.prevent="handleSubmit" class="space-y-2">
                 <div class="flex w-full space-x-2">
-                    <div class="basis-2xs space-y-2">
-                        <Label for="nolicencia">No. Licencia</Label>
-                        <Input id="nolicencia" v-model="form.nolicencia" :disabled="form.processing" />
-                        <InputError :message="form.errors.nolicencia" />
+                    <div class="basis-1xs space-y-2">
+                        <Label for="fechavigencia">Fecha vigencia</Label>
+                        <Input id="fechavigencia" type="date" v-model="form.fechavigencia" />
+                        <InputError :message="form.errors.fechavigencia" />
                     </div>
                     <div class="flex-2 space-y-2">
                         <Label>Categoría de licencia</Label>
@@ -99,11 +99,6 @@ const handleSubmit = () => {
                         <Label for="archivo">PDF de Licencia</Label>
                         <Input id="archivo" type="file" accept=".pdf" @change="handleFileChange" />
                         <InputError :message="form.errors.archivo" />
-                    </div>
-                    <div class="basis-1xs space-y-2">
-                        <Label for="fechavigencia">Fecha vigencia</Label>
-                        <Input id="fechavigencia" type="date" v-model="form.fechavigencia" />
-                        <InputError :message="form.errors.fechavigencia" />
                     </div>
                 </div>
                 <Separator />

@@ -23,16 +23,15 @@ class LicenciaRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'idoperador' => ['required', 'integer', 'exists:operadores,id'],
+            'operador_id' => ['required', 'integer', 'exists:operadores,id'],
             'archivo' => ['required', 'file', 'mimes:pdf', 'max:10240'], // archivos: PDF, Word, Excel, máx 10MB
-            'nolicencia' => ['required', 'string', 'min:5', 'max:15'],
             'categoria' => ['required', 'in:B,E,BE'],
             'fechavigencia' => [
                 'required',
                 'date',
                 // Rule to check for unique combination of idoperador and fechavigencia
                 Rule::unique('licencias')->where(function ($query) {
-                    return $query->where('idoperador', $this->idoperador)
+                    return $query->where('operador_id', $this->operador_id)
                                  ->where('fechavigencia', $this->fechavigencia);
                 })
                 // If you are also using this form for editing and need to ignore the current record:
@@ -45,18 +44,14 @@ class LicenciaRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'idoperador.required' => 'El ID del operador es obligatorio.',
-            'idoperador.integer' => 'El ID del operador debe ser un número entero.',
-            'idoperador.exists' => 'El ID del operador no existe en nuestros registros.',
+            'operador_id.required' => 'El ID del operador es obligatorio.',
+            'operador_id.integer' => 'El ID del operador debe ser un número entero.',
+            'operador_id.exists' => 'El ID del operador no existe en nuestros registros.',
 
             'archivo.required' => 'Debes seleccionar un archivo.',
             'archivo.file' => 'El campo archivo debe ser un archivo válido.',
             'archivo.mimes' => 'El archivo debe ser de tipo: PDF',
             'archivo.max' => 'El tamaño máximo del archivo es 10 MB.',
-
-            'nolicencia.required' => 'El No. de licencia es obligatorio.',
-            'nolicencia.min' => 'El No. de licencia requiere 5 caracteres.',
-            'nolicencia.max' => 'El No. de licencia solo admite 15 caracteres.',
 
             'categoria.required' => 'La Categoría son obligatorias.',
             'categoria.string' => 'La Categoría deben ser texto.',
