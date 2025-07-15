@@ -1,27 +1,25 @@
 <script setup lang="ts">
 import HeadingSmall from '@/components/HeadingSmall.vue';
+import MydataTable from '@/components/mycomponents/Datatable/MyDataTable.vue';
 import Button from '@/components/ui/button/Button.vue';
 import { Card, CardContent, CardTitle } from '@/components/ui/card';
+import CardHeader from '@/components/ui/card/CardHeader.vue';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue';
+import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue';
+import DropdownMenuSeparator from '@/components/ui/dropdown-menu/DropdownMenuSeparator.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
 import { type BreadcrumbItem, type Operador } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
+import { createColumnHelper, type ColumnDef } from '@tanstack/vue-table'; // Make sure ColumnDef is imported here too!
 import { Camera, ChevronsUpDown, CirclePlus, ClipboardPlus, EllipsisVertical, IdCard, Menu, UserPen } from 'lucide-vue-next';
 import { h } from 'vue';
-import MydataTable from '@/components/mycomponents/Datatable/MyDataTable.vue';
-import CardHeader from '@/components/ui/card/CardHeader.vue';
-import DropdownMenuItem from '@/components/ui/dropdown-menu/DropdownMenuItem.vue';
-import DropdownMenuLabel from '@/components/ui/dropdown-menu/DropdownMenuLabel.vue';
-import DropdownMenuSeparator from '@/components/ui/dropdown-menu/DropdownMenuSeparator.vue';
-import { createColumnHelper, type ColumnDef } from '@tanstack/vue-table'; // Make sure ColumnDef is imported here too!
 
 // Import the new DataTable component
 const props = defineProps<{
     operadores: Operador[];
 }>();
-
-const data = props.operadores || [];
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -29,6 +27,8 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: route('operadores.index'),
     },
 ];
+
+const data = props.operadores || [];
 const columnHelper = createColumnHelper<Operador>();
 
 const columns = [
@@ -156,7 +156,7 @@ const columns = [
                     </CardTitle>
                 </CardHeader>
                 <CardContent>
-                    <MydataTable :columns="columns" :data="data" />
+                    <MydataTable :columns="columns" :data="data" :filtro="true" :optionestable="true" />
                 </CardContent>
             </Card>
         </ControlLayout>

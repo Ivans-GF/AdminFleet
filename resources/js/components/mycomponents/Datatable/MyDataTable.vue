@@ -35,6 +35,8 @@ import { ChevronDown, Sheet } from 'lucide-vue-next';
 interface DataTableProps<TData> {
     columns: ColumnDef<TData>[];
     data: TData[];
+    filtro: boolean;
+    optionestable: boolean;
 }
 
 const props = defineProps<DataTableProps<any>>();
@@ -146,13 +148,10 @@ const exportToCsv = () => {
 <template>
     <div class="w-full">
         <div class="flex items-center gap-2 py-4">
-            <Input
-                class="max-w-sm"
-                placeholder="Filtro..."
-                :model-value="globalFilter as string"
-                @update:model-value="table.setGlobalFilter($event)"
-            />
-            <div class="ml-auto flex items-center gap-2">
+            <div v-if="props.filtro">
+                <Input class="max-w-sm" placeholder="Filtro..." :model-value="globalFilter" @update:model-value="table.setGlobalFilter($event)" />
+            </div>
+            <div class="ml-auto flex items-center gap-2" v-if="props.optionestable">
                 <Button variant="outline" @click="exportToCsv"> <Sheet class="mr-2 h-4 w-4" /> Exportar - Excel </Button>
                 <DropdownMenu>
                     <DropdownMenuTrigger as-child>
