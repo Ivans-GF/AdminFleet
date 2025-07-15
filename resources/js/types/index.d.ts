@@ -63,6 +63,8 @@ interface Operador {
     fechavigencia?: date; // Opciones para realizar consultar
     dias_restanteslicencia?: date; // Opciones para realizar consultar
     archivo_licencia_url?: string; // Opciones para realizar consultar
+    created_at: Date;
+    updated_at: Date;
 }
 
 interface Licencia {
@@ -74,6 +76,8 @@ interface Licencia {
     fechavigencia: string;
     comentario: string;
     estado: number;
+    created_at: Date;
+    updated_at: Date;
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;

@@ -1,4 +1,16 @@
 <script setup lang="ts">
+import Button from '@/components/ui/button/Button.vue';
+import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu.vue';
+import DropdownMenuCheckboxItem from '@/components/ui/dropdown-menu/DropdownMenuCheckboxItem.vue';
+import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuContent.vue';
+import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
+import Input from '@/components/ui/input/Input.vue';
+import TableComponent from '@/components/ui/table/Table.vue'; // Renamed to avoid conflict
+import TableBody from '@/components/ui/table/TableBody.vue';
+import TableCell from '@/components/ui/table/TableCell.vue';
+import TableHead from '@/components/ui/table/TableHead.vue';
+import TableHeader from '@/components/ui/table/TableHeader.vue';
+import TableRow from '@/components/ui/table/TableRow.vue';
 import { cn } from '@/lib/utils';
 import {
     ColumnDef,
@@ -15,33 +27,17 @@ import {
     useVueTable,
     VisibilityState,
 } from '@tanstack/vue-table';
+import { ChevronDown, Sheet } from 'lucide-vue-next';
 import { ref, toRefs } from 'vue';
 import { valueUpdater } from './utils';
-
-import Button from '@/components/ui/button/Button.vue';
-import DropdownMenu from '@/components/ui/dropdown-menu/DropdownMenu.vue';
-import DropdownMenuCheckboxItem from '@/components/ui/dropdown-menu/DropdownMenuCheckboxItem.vue';
-import DropdownMenuContent from '@/components/ui/dropdown-menu/DropdownMenuContent.vue';
-import DropdownMenuTrigger from '@/components/ui/dropdown-menu/DropdownMenuTrigger.vue';
-import Input from '@/components/ui/input/Input.vue';
-import TableComponent from '@/components/ui/table/Table.vue'; // Renamed to avoid conflict
-import TableBody from '@/components/ui/table/TableBody.vue';
-import TableCell from '@/components/ui/table/TableCell.vue';
-import TableHead from '@/components/ui/table/TableHead.vue';
-import TableHeader from '@/components/ui/table/TableHeader.vue';
-import TableRow from '@/components/ui/table/TableRow.vue';
-import { ChevronDown, Sheet } from 'lucide-vue-next';
-
 interface DataTableProps<TData> {
     columns: ColumnDef<TData>[];
     data: TData[];
     filtro: boolean;
     optionestable: boolean;
 }
-
 const props = defineProps<DataTableProps<any>>();
 const { data } = toRefs(props);
-
 const sorting = ref<SortingState>([]);
 const columnFilters = ref<ColumnFiltersState>([]);
 const columnVisibility = ref<VisibilityState>({});
@@ -66,6 +62,7 @@ const table: Table<any> = useVueTable({
     onRowSelectionChange: (updaterOrValue) => valueUpdater(updaterOrValue, rowSelection),
     onExpandedChange: (updaterOrValue) => valueUpdater(updaterOrValue, expanded),
     onGlobalFilterChange: (updaterOrValue) => valueUpdater(updaterOrValue, globalFilter),
+
     state: {
         get sorting() {
             return sorting.value;
@@ -85,19 +82,19 @@ const table: Table<any> = useVueTable({
         get globalFilter() {
             return globalFilter.value;
         },
-        // --- FIX START ---
         get pagination() {
             return {
                 pageIndex: 0, // Provide an initial page index (0-based)
                 pageSize: pageSize.value,
             };
         },
-        // --- FIX END ---
     },
-    // This correctly updates your local pageSize ref when pagination state changes
+
     onPaginationChange: (updaterOrValue) => {
         const newState = typeof updaterOrValue === 'function' ? updaterOrValue(table.getState().pagination) : updaterOrValue;
+
         // Ensure you only update pageSize if it's different to prevent unnecessary reactivity
+
         if (newState.pageSize !== pageSize.value) {
             pageSize.value = newState.pageSize;
         }
@@ -105,16 +102,15 @@ const table: Table<any> = useVueTable({
 });
 
 // --- Función para exportar a CSV ---
+
 const exportToCsv = () => {
     const rows = table.getFilteredRowModel().rows; // Obtiene todas las filas filtradas
     const headers = table
         .getAllColumns()
         .filter((column) => column.getIsVisible() && column.columnDef.header) // Solo columnas visibles con encabezado
         .map((column) => (typeof column.columnDef.header === 'string' ? column.columnDef.header : column.id)); // Usar string del header o id
-
     // Crea el encabezado excelß
     let csvContent = headers.join(',') + '\n';
-
     // Agrega las filas de datos
     rows.forEach((row) => {
         const rowData = headers
@@ -123,7 +119,6 @@ const exportToCsv = () => {
                     const headerText = typeof col.columnDef.header === 'string' ? col.columnDef.header : col.id;
                     return headerText === header;
                 })?.id;
-
                 if (columnId) {
                     // Asegúrate de que el valor sea un string y escapa las comas y comillas
                     const cellValue = row.getValue(columnId) ?? '';
@@ -144,7 +139,6 @@ const exportToCsv = () => {
     URL.revokeObjectURL(url); // Libera la URL del objeto
 };
 </script>
-
 <template>
     <div class="w-full">
         <div class="flex items-center gap-2 py-4">
@@ -187,6 +181,7 @@ const exportToCsv = () => {
                                 cn(
                                     { 'bg-background/95 sticky': header.column.getIsPinned() },
                                     header.column.getIsPinned() === 'left' ? 'left-0' : 'right-0',
+                                    'border-r last:border-r-0' /* ✨ Added for column divisions */,
                                 )
                             "
                         >
@@ -206,6 +201,7 @@ const exportToCsv = () => {
                                         cn(
                                             { 'bg-background/95 sticky': cell.column.getIsPinned() },
                                             cell.column.getIsPinned() === 'left' ? 'left-0' : 'right-0',
+                                            'border-r last:border-r-0' /* ✨ Added for column divisions */,
                                         )
                                     "
                                 >

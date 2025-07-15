@@ -129,6 +129,25 @@
     --sidebar-border: hsl(0 0% 91%);
     --sidebar-ring: hsl(217.2 91.2% 59.8%);
     --sidebar: hsl(0 0% 98%);
+
+    /* SweetAlert2 Light Theme Variables (Optional: SweetAlert2 has defaults, but you can override here) */
+    --swal2-background: var(--background);
+    --swal2-text-color: var(--foreground);
+    --swal2-title-color: var(--foreground);
+    --swal2-html-container-color: var(--foreground);
+    --swal2-icon-color: var(--primary);
+    --swal2-confirm-button-background-color: var(--primary);
+    --swal2-cancel-button-background-color: var(--secondary);
+    --swal2-confirm-button-color: var(--primary-foreground);
+    --swal2-cancel-button-color: var(--secondary-foreground);
+    --swal2-input-background-color: var(--input);
+    --swal2-input-text-color: var(--foreground);
+    --swal2-input-border-color: var(--border);
+    --swal2-progress-steps-background-color: var(--primary);
+    --swal2-progress-steps-current-background-color: var(--primary);
+    --swal2-progress-steps-active-background-color: var(--primary);
+    --swal2-progress-steps-line-color: var(--border);
+    --swal2-close-button-color: var(--muted-foreground);
 }
 
 .dark {
@@ -176,6 +195,79 @@
     --sidebar-border: hsl(0 0% 15.9%);
     --sidebar-ring: hsl(217.2 91.2% 59.8%);
     --sidebar: hsl(240 5.9% 10%);
+
+    /* ✨ SweetAlert2 Dark Theme Variables - These are the values SweetAlert2 will use */
+    --swal2-background: var(--background);
+    --swal2-text-color: var(--foreground);
+    --swal2-title-color: var(--foreground);
+    --swal2-html-container-color: var(--foreground);
+    --swal2-icon-color: var(--destructive); /* Using destructive for warning icon */
+    --swal2-confirm-button-background-color: var(--destructive);
+    --swal2-cancel-button-background-color: var(--muted);
+    --swal2-confirm-button-color: var(--destructive-foreground);
+    --swal2-cancel-button-color: var(--muted-foreground);
+    --swal2-input-background-color: var(--input);
+    --swal2-input-text-color: var(--foreground);
+    --swal2-input-border-color: var(--border);
+    --swal2-progress-steps-background-color: var(--primary);
+    --swal2-progress-steps-current-background-color: var(--primary);
+    --swal2-progress-steps-active-background-color: var(--primary);
+    --swal2-progress-steps-line-color: var(--border);
+    --swal2-close-button-color: var(--muted-foreground);
+
+    /* ✨ More Specific Overrides for SweetAlert2 Elements in Dark Mode */
+    /* These ensure your variables take precedence over SweetAlert2's defaults */
+    .swal2-popup {
+        background-color: hsl(224 71.4% 4.1%);
+        color: hsl(210 20% 98%);
+        border-color: var(--swal2-border) !important;
+    }
+    .swal2-title {
+        color: var(--swal2-title-color) !important;
+    }
+    .swal2-html-container {
+        color: var(--swal2-html-container-color) !important;
+    }
+    .swal2-icon {
+        border-color: var(--swal2-icon-color) !important;
+        color: var(--swal2-icon-color) !important;
+    }
+    .swal2-confirm {
+        background-color: var(--swal2-confirm-button-background-color) !important;
+        color: var(--swal2-confirm-button-color) !important;
+    }
+    .swal2-cancel {
+        background-color: var(--swal2-cancel-button-background-color) !important;
+        color: var(--swal2-cancel-button-color) !important;
+    }
+    .swal2-input {
+        background-color: var(--swal2-input-background-color) !important;
+        color: var(--swal2-input-text-color) !important;
+        border-color: var(--swal2-input-border-color) !important;
+    }
+    .swal2-styled.swal2-confirm:focus,
+    .swal2-styled.swal2-cancel:focus {
+        box-shadow: 0 0 0 3px var(--swal2-ring) !important;
+    }
+    .swal2-close {
+        color: var(--swal2-close-button-color) !important;
+    }
+    .swal2-loader {
+        border-color: var(--swal2-background) !important;
+        border-right-color: var(--swal2-primary) !important;
+    }
+    .swal2-progress-steps {
+        background-color: var(--swal2-progress-steps-background-color) !important;
+    }
+    .swal2-progress-steps .swal2-progress-step {
+        background-color: var(--swal2-progress-steps-current-background-color) !important;
+    }
+    .swal2-progress-steps .swal2-progress-step-active {
+        background-color: var(--swal2-progress-steps-active-background-color) !important;
+    }
+    .swal2-progress-steps .swal2-progress-step-line {
+        background-color: var(--swal2-progress-steps-line-color) !important;
+    }
 }
 
 @layer base {
