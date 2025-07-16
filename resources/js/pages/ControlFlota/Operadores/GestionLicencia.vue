@@ -46,7 +46,7 @@ const handleOpenDialog = () => {
 const cancelModaDialog = () => {
     showDialogicencia.value = false;
 };
-// ✨ Updated function to use SweetAlert2
+
 const handleDeleteLicencia = (licenciaId: number) => {
     Swal.fire({
         title: '¿Estás seguro?',
@@ -60,7 +60,7 @@ const handleDeleteLicencia = (licenciaId: number) => {
         reverseButtons: true, // Puts cancel on the left
     }).then((result) => {
         if (result.isConfirmed) {
-            router.delete(route('licencias.destroy', licenciaId), {
+            router.delete(route('licencia.delete', { idlicencia: licenciaId }), {
                 preserveScroll: true,
                 onSuccess: () => {
                     Swal.fire('¡Eliminado!', 'La licencia ha sido eliminada con éxito.', 'success');

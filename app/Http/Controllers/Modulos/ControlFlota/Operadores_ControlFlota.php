@@ -167,6 +167,24 @@ class Operadores_ControlFlota extends Controller
         return false; // Operator not found
     }
 
+    public function destroylicencia($idlicencia): RedirectResponse
+    {
+        $licencia = Licencia::find($idlicencia);
+        if (!$licencia) {
+            return redirect()->back()->with('error', 'Licencia no encontrada.');
+        }
+        // Delete the file from MinIO
+        if ($licencia->archivo && Storage::disk('minio')->exists($licencia->archivo)) {
+            Storage::disk('minio')->delete($licencia->archivo);
+        }
+        // Delete the license record
+        $licencia->delete();
+        // Update the operator's license information
+        $this->updateOperatorLicense($licencia->operador_id);
+        return redirect()->back()->with('success', 'Licencia eliminada correctamente.');
+    }
+
+
     public function getOperadorLicense($idlicencia)
     {
         $licencia = Licencia::findOrFail($idlicencia);
