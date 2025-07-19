@@ -32,8 +32,7 @@ Route::group(['prefix' => 'control-flota', 'middleware' => ['auth', 'verified']]
     //Gestion de Licencia
     Route::GET('/operadores/{operador}/gestionlicencia', [Operadores_ControlFlota::class, 'gestionlicencia'])->name('operadores.gestionlicencia');
     Route::POST('/operadores/storelicencia', [Operadores_ControlFlota::class, 'storelicencia'])->name('operadores.storelicencia');
-
-    //Delete licencia
+    Route::DELETE('/operadores/{idlicencia}/destroylicencia', [Operadores_ControlFlota::class, 'destroylicencia'])->name('operadores.destroylicencia');
 
     Route::get('/licencias/{idlicencia}/ver-licencia', [Operadores_ControlFlota::class, 'getOperadorLicense'])->name('operadores.ver-licencia');
 

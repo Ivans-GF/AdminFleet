@@ -60,10 +60,10 @@ const handleDeleteLicencia = (licenciaId: number) => {
         reverseButtons: true, // Puts cancel on the left
     }).then((result) => {
         if (result.isConfirmed) {
-            router.delete(route('licencia.delete', { idlicencia: licenciaId }), {
+            router.delete(route('operadores.destroylicencia', { idlicencia: licenciaId }), {
                 preserveScroll: true,
                 onSuccess: () => {
-                    Swal.fire('¡Eliminado!', 'La licencia ha sido eliminada con éxito.', 'success');
+
                 },
                 onError: (errors) => {
                     console.error('Error al eliminar la licencia:', errors);
