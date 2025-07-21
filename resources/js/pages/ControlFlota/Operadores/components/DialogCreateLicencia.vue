@@ -25,6 +25,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits(['close', 'save']);
 const showDialog = ref(props.open);
+
 const handleClose = () => {
     form.reset();
     emit('close');

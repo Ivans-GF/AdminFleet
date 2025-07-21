@@ -4,15 +4,14 @@ import MyDataTable from '@/components/mycomponents/Datatable/MyDataTable.vue';
 import Button from '@/components/ui/button/Button.vue';
 import Card from '@/components/ui/card/Card.vue';
 import CardContent from '@/components/ui/card/CardContent.vue';
+import CardHeader from '@/components/ui/card/CardHeader.vue';
+import CardTitle from '@/components/ui/card/CardTitle.vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import ControlLayout from '@/pages/ControlFlota/Layout.vue';
 import { type BreadcrumbItem, type Licencia, type Operador } from '@/types';
 import { Head, Link, router } from '@inertiajs/vue3';
 import { createColumnHelper, type ColumnDef } from '@tanstack/vue-table';
 import { format } from 'date-fns/format';
-
-import CardHeader from '@/components/ui/card/CardHeader.vue';
-import CardTitle from '@/components/ui/card/CardTitle.vue';
 import { es } from 'date-fns/locale';
 import { ArrowDown, ArrowUp, ChevronsUpDown, CirclePlus, Trash2, UndoDot } from 'lucide-vue-next'; // ✨ Removed ArrowDown, ArrowUp, ChevronsUpDown as they are no longer needed for sorting UI
 import Swal from 'sweetalert2';
@@ -35,7 +34,8 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const data = props.licencias || [];
+const data = ref(props.licencias || []);
+
 const columnHelper = createColumnHelper<Operador>();
 
 const showDialogicencia = ref(false);
@@ -43,8 +43,22 @@ const showDialogicencia = ref(false);
 const handleOpenDialog = () => {
     showDialogicencia.value = true;
 };
+
 const cancelModaDialog = () => {
     showDialogicencia.value = false;
+};
+
+const refreshLicenciasTable = () => {
+    router.reload({
+        only: ['licencias'],
+        onSuccess: (page) => {
+            data.value = (page.props.licencias as Licencia[]) || [];
+        },
+        onError: (errors) => {
+            console.error('Error al recargar las licencias después de la operación:', errors);
+            Swal.fire('Error', 'Hubo un problema al actualizar la tabla. Por favor, recarga la página.', 'error');
+        },
+    });
 };
 
 const handleDeleteLicencia = (licenciaId: number) => {
@@ -57,13 +71,13 @@ const handleDeleteLicencia = (licenciaId: number) => {
         cancelButtonColor: '#6b7280', // Tailwind's gray-500
         confirmButtonText: 'Sí, eliminar',
         cancelButtonText: 'Cancelar',
-        reverseButtons: true, // Puts cancel on the left
+        reverseButtons: true,
     }).then((result) => {
         if (result.isConfirmed) {
             router.delete(route('operadores.destroylicencia', { idlicencia: licenciaId }), {
                 preserveScroll: true,
                 onSuccess: () => {
-
+                    refreshLicenciasTable();
                 },
                 onError: (errors) => {
                     console.error('Error al eliminar la licencia:', errors);
@@ -175,14 +189,17 @@ const columns = [
     }),
 ] as ColumnDef<any>[];
 </script>
-
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Control Flota - Gestión de licencia" />
         <ControlLayout>
-            <HeadingSmall title="Gestión de licencia" />
             <Card>
                 <CardHeader>
+                    <HeadingSmall
+                        title="Gestión de licencia"
+                        description="Asignaremos la licencia con mayor vigencia al operador para mejor control."
+                    />
+
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
                             <Button as-child variant="outline" size="sm">
@@ -198,5 +215,11 @@ const columns = [
             </Card>
         </ControlLayout>
     </AppLayout>
-    <DialogCreateLicencia v-if="showDialogicencia" :open="showDialogicencia" :operadorId="props.operador?.id" @close="cancelModaDialog" />
+    <DialogCreateLicencia
+        v-if="showDialogicencia"
+        :open="showDialogicencia"
+        :operadorId="props.operador?.id"
+        @close="cancelModaDialog"
+        @save="refreshLicenciasTable"
+    />
 </template>
