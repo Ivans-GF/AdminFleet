@@ -199,7 +199,6 @@ const columns = [
                         title="Gestión de licencia"
                         description="Asignaremos la licencia con mayor vigencia al operador para mejor control."
                     />
-
                     <CardTitle>
                         <div class="flex flex-row justify-end space-x-2">
                             <Button as-child variant="outline" size="sm">
