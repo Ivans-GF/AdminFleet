@@ -13,7 +13,7 @@ import { Head, Link, router } from '@inertiajs/vue3';
 import { createColumnHelper, type ColumnDef } from '@tanstack/vue-table';
 import { format } from 'date-fns/format';
 import { es } from 'date-fns/locale';
-import { ArrowDown, ArrowUp, ChevronsUpDown, CirclePlus, Trash2, UndoDot } from 'lucide-vue-next'; // ✨ Removed ArrowDown, ArrowUp, ChevronsUpDown as they are no longer needed for sorting UI
+import { ArrowDown, ArrowUp, Camera, ChevronsUpDown, CirclePlus, Trash2, UndoDot } from 'lucide-vue-next'; // ✨ Removed ArrowDown, ArrowUp, ChevronsUpDown as they are no longer needed for sorting UI
 import Swal from 'sweetalert2';
 import { h, ref } from 'vue';
 import DialogCreateLicencia from './components/DialogCreateLicencia.vue';
@@ -121,11 +121,10 @@ const columns = [
                 },
                 () => [
                     'Fecha Vigencia',
-                    // ✨ Re-added sorting icons based on current sort state
                     column.getIsSorted() === 'asc'
-                        ? h(ArrowUp, { class: 'ml-2 h-4 w-4' }) // Ascending icon
+                        ? h(ArrowUp, { class: 'ml-2 h-4 w-4' })
                         : column.getIsSorted() === 'desc'
-                          ? h(ArrowDown, { class: 'ml-2 h-4 w-4' }) // Descending icon
+                          ? h(ArrowDown, { class: 'ml-2 h-4 w-4' })
                           : h(ChevronsUpDown, { class: 'ml-2 h-4 w-4 text-muted-foreground' }), // Default unsorted icon
                 ],
             );
@@ -143,15 +142,14 @@ const columns = [
                 Button,
                 {
                     variant: 'ghost',
-                    class: 'w-full justify-center text-center font-semibold', // ✨ Changed to justify-center and text-center for consistency
+                    class: 'w-full justify-center text-center font-semibold',
                 },
                 () => ['Fecha registro'],
             );
         },
-        // ✨ MODIFIED: Centering the cell content
         cell: (info) => {
-            const dateValue = info.getValue(); // Get the value (could be string, Date, null, undefined)
-            let formattedDate: string = ''; // Explicitly type as string
+            const dateValue = info.getValue();
+            let formattedDate: string = '';
             if (dateValue) {
                 try {
                     const dateObject = typeof dateValue === 'string' ? new Date(dateValue) : dateValue;
@@ -173,16 +171,21 @@ const columns = [
         id: 'acciones',
         header: () => h('div', { class: 'text-center font-semibold' }, 'Acciones'),
         cell: (props) =>
-            h(
-                Button,
-                {
-                    variant: 'destructive',
-                    size: 'sm',
-                    class: 'mx-auto',
-                    onClick: () => handleDeleteLicencia(props.row.original.id),
-                },
-                () => h(Trash2, { class: 'h-4 w-4' }),
-            ),
+            h('div', { class: 'flex justify-center items-center gap-2' }, [
+                h(Link, { href: route('operadores.ver-licencia', props.row.original.id), class: 'flex items-center' }, () => [
+                    h(Camera, { class: 'mr-2 h-4 w-4' }),
+                ]),
+                h(
+                    Button,
+                    {
+                        variant: 'destructive',
+                        size: 'sm',
+                        onClick: () => handleDeleteLicencia(props.row.original.id),
+                        title: 'Eliminar Licencia',
+                    },
+                    () => h(Trash2, { class: 'h-4 w-4' }),
+                ),
+            ]),
         enableSorting: false,
         enableHiding: false,
         enableColumnFilter: false,
